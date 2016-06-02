@@ -14,7 +14,7 @@ public class PuzzleSolver {
      *  Renvoie les déplacements possibles depuis une position sur le plateau.
      * @param position une position sur le plateau
      */
-    private ArrayList<Deplacement> getDeplacementsPossibles(Position position) {
+    public ArrayList<Deplacement> getDeplacementsPossibles(Position position) {
         return null;
     }
 }
