@@ -15,6 +15,12 @@ public class PuzzleSolver {
      * @param position une position sur le plateau
      */
     public ArrayList<Deplacement> getDeplacementsPossibles(Position position) {
-        return null;
+        ArrayList<Deplacement> coupsPossibles = new ArrayList<Deplacement>();
+
+
+
+        return coupsPossibles;
     }
+
+
 }
