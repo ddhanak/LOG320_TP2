@@ -3,13 +3,17 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        int[][] puzzle = null;
+        int[][] plateau = new int[][]{
+                {0,0,1,1,1,0,0},
+                {0,0,1,1,1,0,0},
+                {1,1,1,1,1,1,1},
+                {1,1,1,2,1,1,1},
+                {1,1,1,1,1,1,1},
+                {0,0,1,1,1,0,0},
+                {0,0,1,1,1,0,0}};
 
-        try {
-            puzzle = FileHelper.getPuzzleFromFile("test.puzzle");
-        } catch (Exception e) {
-            System.out.println("File does not exist");
-        }
-
+        PuzzleSolver solver = new PuzzleSolver(plateau);
     }
+
+
 }
