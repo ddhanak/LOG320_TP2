@@ -5,17 +5,17 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("FrameDemo");
-        frame.setVisible(true);
-        frame.setSize(500,500);
+        int[][] plateau = new int[][]{
+                {0,0,1,1,1,0,0},
+                {0,0,1,1,1,0,0},
+                {1,1,1,1,1,1,1},
+                {1,1,1,2,1,1,1},
+                {1,1,1,1,1,1,1},
+                {0,0,1,1,1,0,0},
+                {0,0,1,1,1,0,0}};
 
-        JButton b1 = new JButton("Charger... 1");
-        JButton b2 = new JButton("Résoudre");
-        JButton b3 = new JButton("Solution");
-        frame.add(b1);
-        frame.add(b2);
-        frame.add(b3);
-
-
+        PuzzleSolver solver = new PuzzleSolver(plateau);
     }
+
+
 }
