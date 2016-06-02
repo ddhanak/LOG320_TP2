@@ -1,19 +1,13 @@
 package com.company;
 
+import UI.GrillePuzzle;
+
 public class Main {
 
     public static void main(String[] args) {
-        int[][] plateau = new int[][]{
-                {0,0,1,1,1,0,0},
-                {0,0,1,1,1,0,0},
-                {1,1,1,1,1,1,1},
-                {1,1,1,2,1,1,1},
-                {1,1,1,1,1,1,1},
-                {0,0,1,1,1,0,0},
-                {0,0,1,1,1,0,0}};
+        GrillePuzzle gp = new GrillePuzzle("Puzzle");
+        Thread t = new Thread(gp);
+        t.start();
 
-        PuzzleSolver solver = new PuzzleSolver(plateau);
     }
-
-
 }
