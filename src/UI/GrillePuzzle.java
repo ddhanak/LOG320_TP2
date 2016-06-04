@@ -8,8 +8,8 @@ import java.awt.*;
  */
 public class GrillePuzzle extends JFrame implements Runnable {
 
-    private static final int FRAME_WIDTH = 1000;
-    private static final int FRAME_HEIGHT = 600;
+    private static final int FRAME_WIDTH = 600;
+    private static final int FRAME_HEIGHT = 500;
     private PrincipalPanel pPanel;
     private GridPanel gPanel;
     private MenuPuzzle menuPuzzle;
