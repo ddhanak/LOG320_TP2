@@ -25,6 +25,10 @@ public class GridPanel extends JPanel {
                     gbc.fill = GridBagConstraints.HORIZONTAL;
                     JButton button = new JButton(String.valueOf("0"));
                     button.setFont(new Font(getName(), Font.BOLD, 24));
+                    button.setEnabled(false);
+                    if(line ==3 && colonne == 3) {
+                        button.setBackground(Color.BLACK);
+                    }
                     this.add(button, gbc);
                 }
 

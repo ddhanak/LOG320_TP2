@@ -1,8 +1,9 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class PuzzleSolver {
+public class PuzzleSolver extends Observable {
 
     private int[][] _plateau;
 

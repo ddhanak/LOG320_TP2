@@ -11,8 +11,9 @@ public class GrillePuzzle extends JFrame implements Runnable {
     private static final int FRAME_WIDTH = 1000;
     private static final int FRAME_HEIGHT = 600;
     private PrincipalPanel pPanel;
-    private GridPanel gpanel;
+    private GridPanel gPanel;
     private MenuPuzzle menuPuzzle;
+    private  OptionPanel oPanel;
 
     public GrillePuzzle(String title) {
         super(title);
@@ -24,8 +25,10 @@ public class GrillePuzzle extends JFrame implements Runnable {
         menuPuzzle = new MenuPuzzle();
         setJMenuBar(menuPuzzle);
         pPanel = new PrincipalPanel();
-        gpanel = new GridPanel();
-        pPanel.add(gpanel, BorderLayout.CENTER);
+        gPanel = new GridPanel();
+        oPanel = new OptionPanel();
+        pPanel.add(gPanel, BorderLayout.CENTER);
+        pPanel.add(oPanel,BorderLayout.SOUTH);
         setContentPane(pPanel);
 
         this.setVisible(true);
