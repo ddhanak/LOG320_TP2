@@ -1,22 +1,36 @@
 package UI;
 
+import com.company.GridPuzzle;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Walid on 2016-06-01.
  */
-public class GridPanel extends JPanel {
+public class GridPanel extends JPanel implements Observer{
 
+    private GridPuzzle gPuzzle;
 
+    public GridPanel(GridPuzzle gPuzzle){
+        super();
+        this.gPuzzle = gPuzzle;
+        init();
+    }
 
-    public GridPanel(){
-      init();
-        for(int line = 0 ; line<7;line++){
+    public void initGrid(int[][] puzzle) {
 
-            for(int colonne = 0; colonne<7;colonne++){
-                if((line == 0 || line ==1 || line ==5 || line ==6) && (colonne== 0 || colonne ==1 ||colonne==5||colonne==6)) {
-                continue;
+        gPuzzle.deleteObservers();
+        gPuzzle = new GridPuzzle(puzzle);
+        update
+        for(int line = 0 ; line<puzzle.length;line++){
+
+            for(int colonne = 0; colonne<puzzle.length;colonne++){
+                if(puzzle[line][colonne] == 0){
+                    continue;
                 }
                 else {
                     GridBagConstraints gbc = new GridBagConstraints();
@@ -26,23 +40,29 @@ public class GridPanel extends JPanel {
                     JButton button = new JButton(String.valueOf("0"));
                     button.setFont(new Font(getName(), Font.BOLD, 24));
                     button.setEnabled(false);
-                    if(line ==3 && colonne == 3) {
+                    if(puzzle[line][colonne] == 2) {
                         button.setBackground(Color.BLACK);
                     }
                     this.add(button, gbc);
                 }
-
             }
-
-
-
         }
+
     }
-    public void init(){
+
+    private void updateObserver(){
+        gPuzzle.addObserver();
+    }
+
+    private void init(){
         GridBagLayout layout = new GridBagLayout();
         this.setLayout(layout);
         this.setBackground(Color.GRAY);
     }
 
 
+    @Override
+    public void update(Observable o, Object arg) {
+        repaint();
+    }
 }

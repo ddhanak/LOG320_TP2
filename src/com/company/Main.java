@@ -1,11 +1,10 @@
 package com.company;
-
-import UI.GrillePuzzle;
+import UI.GridUIPuzzle;
 
 public class Main {
 
     public static void main(String[] args) {
-        GrillePuzzle gp = new GrillePuzzle("Puzzle");
+        GridUIPuzzle gp = new GridUIPuzzle("Puzzle");
         Thread t = new Thread(gp);
         t.start();
 
