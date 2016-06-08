@@ -58,10 +58,6 @@ public class GridPanel extends JPanel implements Observer{
 
             for(int j = 0; j<GridPuzzle.MAXIMUM;j++){
 
-                   /* GridBagConstraints gbc = new GridBagConstraints();
-                    gbc.gridx = i;
-                    gbc.gridy = j;
-                    gbc.fill = GridBagConstraints.HORIZONTAL;*/
                     myButtons[i][j].setColor(Color.GRAY);
                     if(gPuzzle.getCase(i,j) == 0){
                         myButtons[i][j].setVisible(false);
