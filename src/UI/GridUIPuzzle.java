@@ -31,7 +31,7 @@ public class GridUIPuzzle extends JFrame implements Runnable {
         gPuzzle = new GridPuzzle(FileHelper.getPuzzleFromFile(gridFile));
         pPanel = new PrincipalPanel();
         gPanel = new GridPanel(gPuzzle);
-        oPanel = new OptionPanel();
+        oPanel = new OptionPanel(gPanel);
         pPanel.add(gPanel, BorderLayout.CENTER);
         pPanel.add(oPanel,BorderLayout.SOUTH);
         setContentPane(pPanel);
