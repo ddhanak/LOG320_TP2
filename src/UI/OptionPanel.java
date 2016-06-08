@@ -1,7 +1,6 @@
 package UI;
 
 import com.company.FileHelper;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
