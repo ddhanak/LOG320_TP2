@@ -4,7 +4,6 @@ import com.company.GridPuzzle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
