@@ -1,8 +1,10 @@
 package UI;
+import com.company.FileHelper;
 import com.company.GridPuzzle;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * Created by Walid on 2016-06-01.
@@ -16,29 +18,36 @@ public class GridUIPuzzle extends JFrame implements Runnable {
     private MenuPuzzle menuPuzzle;
     private  OptionPanel oPanel;
     private GridPuzzle gPuzzle;
+    private static final String gridFile = "test.puzzle";
 
     public GridUIPuzzle(String title) {
         super(title);
     }
 
-    public void init() {
+    public void init() throws IOException {
         setSize(FRAME_WIDTH,FRAME_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        gPuzzle = new GridPuzzle(FileHelper.getPuzzleFromFile(gridFile));
         pPanel = new PrincipalPanel();
-        gPanel = new GridPanel();
+        gPanel = new GridPanel(gPuzzle);
         oPanel = new OptionPanel();
         pPanel.add(gPanel, BorderLayout.CENTER);
         pPanel.add(oPanel,BorderLayout.SOUTH);
         setContentPane(pPanel);
         menuPuzzle = new MenuPuzzle(gPanel);
         setJMenuBar(menuPuzzle);
-
+        gPuzzle.addObserver(gPanel);
         this.setVisible(true);
+
     }
 
     public void run() {
-        init();
+        try {
+            init();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

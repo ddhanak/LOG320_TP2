@@ -14,18 +14,42 @@ import java.util.Observer;
 public class GridPanel extends JPanel implements Observer{
 
     private GridPuzzle gPuzzle;
+    private BoxSquareGrid[][] myButtons;
 
     public GridPanel(GridPuzzle gPuzzle){
         super();
         this.gPuzzle = gPuzzle;
-        init();
+        firstInitGrid();
     }
 
+    public void firstInitGrid() {
+        myButtons = new BoxSquareGrid[GridPuzzle.MAXIMUM][GridPuzzle.MAXIMUM];
+        setLayout(new GridLayout(GridPuzzle.MAXIMUM,GridPuzzle.MAXIMUM));
+        this.setBackground(Color.LIGHT_GRAY);
+
+        for(int i=0; i<GridPuzzle.MAXIMUM;i++) {
+            for(int j=0; j<GridPuzzle.MAXIMUM;j++) {
+
+                    myButtons[i][j] = new BoxSquareGrid("0",i,j,Color.GRAY);
+                    myButtons[i][j].initButton();
+                    this.add(myButtons[i][j]);
+
+                    if(gPuzzle.getCase(i,j) == 0){
+                        myButtons[i][j].setVisible(false);
+                    }
+                    else if(gPuzzle.getCase(i,j) == 2) {
+                        myButtons[i][j].setColor(Color.BLACK);
+                    }
+            }
+        }
+
+    }
     public void initGrid(int[][] puzzle) {
 
         gPuzzle.deleteObservers();
         gPuzzle = new GridPuzzle(puzzle);
         updateObserver();
+        updateGrid();
     }
 
     private void updateGrid(){
@@ -33,24 +57,23 @@ public class GridPanel extends JPanel implements Observer{
         for(int i = 0 ; i<GridPuzzle.MAXIMUM;i++){
 
             for(int j = 0; j<GridPuzzle.MAXIMUM;j++){
-                if(gPuzzle.getCase(i,j) == 0){
-                    continue;
-                }
-                else {
-                    GridBagConstraints gbc = new GridBagConstraints();
+
+                   /* GridBagConstraints gbc = new GridBagConstraints();
                     gbc.gridx = i;
                     gbc.gridy = j;
-                    gbc.fill = GridBagConstraints.HORIZONTAL;
-                    JButton button = new JButton(String.valueOf("0"));
-                    button.setFont(new Font(getName(), Font.BOLD, 24));
-                    button.setEnabled(false);
-                    if(gPuzzle.getCase(i,j) == 2) {
-                        button.setBackground(Color.BLACK);
+                    gbc.fill = GridBagConstraints.HORIZONTAL;*/
+                    myButtons[i][j].setColor(Color.GRAY);
+                    if(gPuzzle.getCase(i,j) == 0){
+                        myButtons[i][j].setVisible(false);
                     }
-                    this.add(button, gbc);
-                }
+                    else if(gPuzzle.getCase(i,j) == 2) {
+                        myButtons[i][j].setColor(Color.BLACK);
+                    }
+
             }
         }
+        validate();
+        repaint();
     }
     private void updateObserver(){
         gPuzzle.addObserver(this);
