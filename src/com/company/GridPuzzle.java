@@ -21,4 +21,8 @@ public class GridPuzzle extends Observable {
             }
         }
     }
+
+    public int getCase(int i, int j) {
+     return this.grid[i][j];
+    }
 }

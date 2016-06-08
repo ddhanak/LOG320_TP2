@@ -25,33 +25,35 @@ public class GridPanel extends JPanel implements Observer{
 
         gPuzzle.deleteObservers();
         gPuzzle = new GridPuzzle(puzzle);
-        update
-        for(int line = 0 ; line<puzzle.length;line++){
+        updateObserver();
+    }
 
-            for(int colonne = 0; colonne<puzzle.length;colonne++){
-                if(puzzle[line][colonne] == 0){
+    private void updateGrid(){
+
+        for(int i = 0 ; i<GridPuzzle.MAXIMUM;i++){
+
+            for(int j = 0; j<GridPuzzle.MAXIMUM;j++){
+                if(gPuzzle.getCase(i,j) == 0){
                     continue;
                 }
                 else {
                     GridBagConstraints gbc = new GridBagConstraints();
-                    gbc.gridx = colonne;
-                    gbc.gridy = line;
+                    gbc.gridx = i;
+                    gbc.gridy = j;
                     gbc.fill = GridBagConstraints.HORIZONTAL;
                     JButton button = new JButton(String.valueOf("0"));
                     button.setFont(new Font(getName(), Font.BOLD, 24));
                     button.setEnabled(false);
-                    if(puzzle[line][colonne] == 2) {
+                    if(gPuzzle.getCase(i,j) == 2) {
                         button.setBackground(Color.BLACK);
                     }
                     this.add(button, gbc);
                 }
             }
         }
-
     }
-
     private void updateObserver(){
-        gPuzzle.addObserver();
+        gPuzzle.addObserver(this);
     }
 
     private void init(){
