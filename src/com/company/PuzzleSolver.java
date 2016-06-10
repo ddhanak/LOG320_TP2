@@ -40,6 +40,7 @@ public class PuzzleSolver extends Observable {
 
         if (possibleMoves.size() == 0) {
             if (_moves.size() == 0)
+                // On est au premier essai ou revenu au début et il y a aucun déplacement possible.
                 return false;
 
             revertLastMove();
@@ -48,6 +49,7 @@ public class PuzzleSolver extends Observable {
         for (Move move : possibleMoves) {
             makeMove(move);
 
+            // On tente de résoudre le puzzle avec une tige en moins
             if (solvePuzzle())
                 return true;
         }
