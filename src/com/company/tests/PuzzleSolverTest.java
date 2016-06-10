@@ -19,7 +19,7 @@ public class PuzzleSolverTest {
         PuzzleSolver solver = new PuzzleSolver(defaultPuzzle);
         assertTrue(solver.solvePuzzle());
         assertEquals(1, solver.getNbSticks());
-        showResults(solver);
+        printResults(solver);
     }
 
     @Test
@@ -27,7 +27,7 @@ public class PuzzleSolverTest {
         PuzzleSolver solver = new PuzzleSolver(bigPuzzle);
         assertTrue(solver.solvePuzzle());
         assertEquals(1, solver.getNbSticks());
-        showResults(solver);
+        printResults(solver);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class PuzzleSolverTest {
         }
     }
 
-    private void showResults(PuzzleSolver solver) {
+    private void printResults(PuzzleSolver solver) {
         System.out.println("Nombre de noeuds visités : " + solver.getNbPositionsVisited());
         System.out.println("Nombre de coups de la solution : " + solver.getMoves().size());
         System.out.println("Solution : ");

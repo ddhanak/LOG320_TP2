@@ -79,7 +79,7 @@ public class PuzzleSolver extends Observable {
     }
 
     public ArrayList<Move> getPossibleMoves() {
-        ArrayList<Move> possibleMoves = new ArrayList<Move>();
+        ArrayList<Move> possibleMoves = new ArrayList<>();
 
         for (int x = 0; x != _puzzle.length; x++) {
             for (int y = 0; y != _puzzle.length; y++) {
@@ -121,7 +121,7 @@ public class PuzzleSolver extends Observable {
         return possibleMoves;
     }
 
-    private int calculateNbSticks(int[][] puzzle) {
+    public int calculateNbSticks(int[][] puzzle) {
         int nbSticks = 0;
 
         for (int x = 0; x != _puzzle.length; x++) {
