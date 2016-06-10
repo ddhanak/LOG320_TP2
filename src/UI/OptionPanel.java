@@ -54,10 +54,11 @@ public class OptionPanel extends JPanel {
                 }
             }
             else if(e.getSource() == solveButton) {
+                    gPanel.solve();
 
             }
             else if(e.getSource() == solutionButton) {
-
+                    gPanel.solve();
             }
         }
     }

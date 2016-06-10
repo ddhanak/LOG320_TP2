@@ -1,6 +1,7 @@
 package UI;
 
 import com.company.GridPuzzle;
+import com.company.PuzzleSolver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,21 +14,23 @@ import java.util.Observer;
 public class GridPanel extends JPanel implements Observer{
 
     private GridPuzzle gPuzzle;
+    private PuzzleSolver pSolver;
     private BoxSquareGrid[][] myButtons;
 
-    public GridPanel(GridPuzzle gPuzzle){
+    public GridPanel(GridPuzzle gPuzzle, PuzzleSolver pSolver){
         super();
         this.gPuzzle = gPuzzle;
+        this.pSolver = pSolver;
         firstInitGrid();
     }
 
     public void firstInitGrid() {
-        myButtons = new BoxSquareGrid[GridPuzzle.MAXIMUM][GridPuzzle.MAXIMUM];
-        setLayout(new GridLayout(GridPuzzle.MAXIMUM,GridPuzzle.MAXIMUM));
+        myButtons = new BoxSquareGrid[gPuzzle.getLength()][gPuzzle.getLength()];
+        setLayout(new GridLayout(gPuzzle.getLength(),gPuzzle.getLength()));
         this.setBackground(Color.LIGHT_GRAY);
 
-        for(int i=0; i<GridPuzzle.MAXIMUM;i++) {
-            for(int j=0; j<GridPuzzle.MAXIMUM;j++) {
+        for(int i=0; i<gPuzzle.getLength();i++) {
+            for(int j=0; j<gPuzzle.getLength();j++) {
 
                     myButtons[i][j] = new BoxSquareGrid("0",i,j,Color.GRAY);
                     myButtons[i][j].initButton();
@@ -53,9 +56,9 @@ public class GridPanel extends JPanel implements Observer{
 
     private void updateGrid(){
 
-        for(int i = 0 ; i<GridPuzzle.MAXIMUM;i++){
+        for(int i = 0 ; i<gPuzzle.getLength();i++){
 
-            for(int j = 0; j<GridPuzzle.MAXIMUM;j++){
+            for(int j = 0; j<gPuzzle.getLength();j++){
 
                     myButtons[i][j].setColor(Color.GRAY);
                     if(gPuzzle.getCase(i,j) == 0){
@@ -70,6 +73,10 @@ public class GridPanel extends JPanel implements Observer{
         validate();
         repaint();
     }
+
+    public void solve(){
+        pSolver.solvePuzzle();
+    }
     private void updateObserver(){
         gPuzzle.addObserver(this);
     }
@@ -83,6 +90,6 @@ public class GridPanel extends JPanel implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        repaint();
+        updateGrid();
     }
 }

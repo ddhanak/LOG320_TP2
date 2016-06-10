@@ -1,6 +1,7 @@
 package com.company.tests;
 
 import com.company.FileHelper;
+import com.company.GridPuzzle;
 import com.company.Move;
 import com.company.PuzzleSolver;
 import org.junit.Test;
@@ -16,7 +17,7 @@ public class PuzzleSolverTest {
 
     @Test
     public void solvePuzzle_PuzzleWithSolution_PuzzleSolved() {
-        PuzzleSolver solver = new PuzzleSolver(defaultPuzzle);
+        PuzzleSolver solver = new PuzzleSolver(gPuzzleDefault);
         assertTrue(solver.solvePuzzle());
         assertEquals(1, solver.getNbSticks());
         showResults(solver);
@@ -24,7 +25,7 @@ public class PuzzleSolverTest {
 
     @Test
     public void solvePuzzle_BigPuzzle_PuzzleSolved() {
-        PuzzleSolver solver = new PuzzleSolver(bigPuzzle);
+        PuzzleSolver solver = new PuzzleSolver(gPuzzleBig);
         assertTrue(solver.solvePuzzle());
         assertEquals(1, solver.getNbSticks());
         showResults(solver);
@@ -32,7 +33,7 @@ public class PuzzleSolverTest {
 
     @Test
     public void solvePuzzle_PuzzleWithNoSolution_ReturnsFalse() {
-        PuzzleSolver solver = new PuzzleSolver(unsolvablePuzzle);
+        PuzzleSolver solver = new PuzzleSolver(gPuzzleUnSolvable);
         assertFalse(solver.solvePuzzle());
     }
 
@@ -68,6 +69,7 @@ public class PuzzleSolverTest {
         }
     }
 
+
     int[][] defaultPuzzle = new int[][]{
             {0,0,1,1,1,0,0},
             {0,0,1,1,1,0,0},
@@ -76,6 +78,7 @@ public class PuzzleSolverTest {
             {1,1,1,1,1,1,1},
             {0,0,1,1,1,0,0},
             {0,0,1,1,1,0,0}};
+    GridPuzzle gPuzzleDefault = new GridPuzzle(defaultPuzzle);
 
     int [][] bigPuzzle = new int [][] {
             {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,},
@@ -135,6 +138,9 @@ public class PuzzleSolverTest {
             {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,},
             {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,}};
 
+    GridPuzzle gPuzzleBig = new GridPuzzle(defaultPuzzle);
+
+
     int[][] unsolvablePuzzle = new int[][]{
             {0,0,1,1,1,0,0},
             {0,0,1,1,1,0,0},
@@ -143,4 +149,7 @@ public class PuzzleSolverTest {
             {1,1,1,1,1,1,1},
             {0,0,1,1,1,0,0},
             {0,0,1,1,1,0,0}};
+
+    GridPuzzle gPuzzleUnSolvable = new GridPuzzle(defaultPuzzle);
+
 }

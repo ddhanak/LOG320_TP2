@@ -9,15 +9,22 @@ public class PuzzleSolver extends Observable {
     private static final int STICK = 1;
     private static final int EMPTY = 2;
 
-    private int[][] _puzzle;
+   // private int[][] _puzzle;
     private Stack<Move> _moves;
     private int _nbSticks;
     private int _nbPositionsVisited;
+    private GridPuzzle gPuzzle;
 
-    public PuzzleSolver(int[][] puzzle) {
+   /* public PuzzleSolver(int[][] puzzle) {
         _puzzle = puzzle;
         _moves = new Stack<>();
         _nbSticks = calculateNbSticks(puzzle);
+    }
+*/
+    public PuzzleSolver(GridPuzzle gPuzzle) {
+        this.gPuzzle = gPuzzle;
+        _moves = new Stack<>();
+        _nbSticks = calculateNbSticks();
     }
 
     public int getNbPositionsVisited() {
@@ -60,6 +67,7 @@ public class PuzzleSolver extends Observable {
     public void revertLastMove() {
         _moves.pop();
         _nbSticks++;
+        setChanged();
         notifyObservers();
     }
 
@@ -68,22 +76,23 @@ public class PuzzleSolver extends Observable {
     }
 
     public void makeMove(Move move) {
-        _puzzle[move.getStart().X][move.getStart().Y] = EMPTY;
-        _puzzle[move.getMiddle().X][move.getMiddle().Y] = EMPTY;
-        _puzzle[move.getEnd().X][move.getEnd().Y] = STICK;
+        gPuzzle.setCase(move.getStart().X,move.getStart().Y,EMPTY);
+        gPuzzle.setCase(move.getMiddle().X,move.getMiddle().Y,EMPTY);
+        gPuzzle.setCase(move.getEnd().X,move.getEnd().Y,STICK);
 
         _moves.add(move);
         _nbSticks--;
         _nbPositionsVisited++;
+        setChanged();
         notifyObservers();
     }
 
     public ArrayList<Move> getPossibleMoves() {
         ArrayList<Move> possibleMoves = new ArrayList<Move>();
 
-        for (int x = 0; x != _puzzle.length; x++) {
-            for (int y = 0; y != _puzzle.length; y++) {
-                int positionType = _puzzle[x][y];
+        for (int x = 0; x != gPuzzle.getLength(); x++) {
+            for (int y = 0; y != gPuzzle.getLength(); y++) {
+                int positionType = gPuzzle.getCase(x,y);
 
                 if (positionType == NOT_ON_PUZZLE || positionType == EMPTY)
                     continue;
@@ -99,34 +108,34 @@ public class PuzzleSolver extends Observable {
         ArrayList<Move> possibleMoves =  new ArrayList<>();
 
         // LEFT
-        if (y >= 2 && _puzzle[x][y - 1] == STICK && _puzzle[x][y - 2] == EMPTY) {
+        if (y >= 2 && gPuzzle.getCase(x,y - 1) == STICK && gPuzzle.getCase(x,y - 2) == EMPTY) {
             possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 2)));
         }
 
         // RIGHT
-        if (_puzzle.length > y + 2 && _puzzle[x][y + 1] == STICK && _puzzle[x][y + 2] == EMPTY) {
+        if (gPuzzle.getLength()> y + 2 && gPuzzle.getCase(x,y + 1) == STICK && gPuzzle.getCase(x,y + 2) == EMPTY) {
             possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 2)));
         }
 
         // UP
-        if (x >= 2 && _puzzle[x - 1][y] == STICK && _puzzle[x - 2][y] == EMPTY) {
+        if (x >= 2 && gPuzzle.getCase(x - 1,y) == STICK && gPuzzle.getCase(x - 2,y) == EMPTY) {
             possibleMoves.add(new Move(new Position(x, y), new Position(x - 2, y)));
         }
 
         // DOWN
-        if (_puzzle.length > x + 2 && _puzzle[x + 1][y] == STICK && _puzzle[x + 2][y] == EMPTY) {
+        if (gPuzzle.getLength() > x + 2 && gPuzzle.getCase(x + 1,y) == STICK && gPuzzle.getCase(x + 2,y) == EMPTY) {
             possibleMoves.add(new Move(new Position(x, y), new Position(x + 2, y)));
         }
 
         return possibleMoves;
     }
 
-    private int calculateNbSticks(int[][] puzzle) {
+    private int calculateNbSticks() {
         int nbSticks = 0;
 
-        for (int x = 0; x != _puzzle.length; x++) {
-            for (int y = 0; y != _puzzle.length; y++) {
-                if (puzzle[x][y] == STICK)
+        for (int x = 0; x != gPuzzle.getLength(); x++) {
+            for (int y = 0; y != gPuzzle.getLength(); y++) {
+                if (gPuzzle.getCase(x,y) == STICK)
                     nbSticks++;
             }
         }
