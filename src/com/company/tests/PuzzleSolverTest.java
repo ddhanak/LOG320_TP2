@@ -1,36 +1,59 @@
 package com.company.tests;
 
-import com.company.Deplacement;
 import com.company.FileHelper;
-import com.company.Position;
 import com.company.PuzzleSolver;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class PuzzleSolverTest {
+
     @Test
-    public void getDeplacementsPossibles_AucunDeplacementPossible() {
-        // Prepare
+    public void solvePuzzle_PuzzleWithSolution_PuzzleSolved() {
         PuzzleSolver solver = makePuzzleSolver();
-        Position position = new Position(1, 3);
+        assertTrue(solver.solvePuzzle());
+        assertEquals(1, solver.getNbSticks());
+    }
 
-        // Act
-        ArrayList<Deplacement> deplacementsPossibles = solver.getDeplacementsPossibles(position);
+    @Test
+    public void solvePuzzle_PuzzleWithNoSolution_ReturnsFalse() {
+        PuzzleSolver solver = makePuzzleSolver();
+        solver.setPuzzle(unsolvablePuzzle);
+        assertFalse(solver.solvePuzzle());
+    }
+
+    @Test
+    public void checkPuzzle_PuzzleIsIdentical() throws IOException {
+        int[][] puzzle1 = new int[][]{
+                {1,0,1,1,1,0,2},
+                {0,0,1,1,1,0,0},
+                {1,1,1,1,1,1,1},
+                {1,1,1,2,1,1,1},
+                {1,1,1,1,1,1,1},
+                {0,0,1,1,1,0,0},
+                {1,0,1,1,1,0,2}};
 
 
-        // Assert
-        assertEquals(1, deplacementsPossibles.size());
+        int[][] puzzle2 = FileHelper.getPuzzleFromFile("test.puzzle");
+
+        for (int x = 0; x != puzzle1.length; x++) {
+            for (int y = 0; y != puzzle1.length; y++) {
+                if (puzzle1[x][y] != puzzle2[x][y])
+                    fail("Puzzles are not identicals.");
+            }
+        }
     }
 
     PuzzleSolver makePuzzleSolver() {
-        return new PuzzleSolver(plateau);
+        return new PuzzleSolver(defaultPuzzle);
     }
 
-    int[][] plateau = new int[][]{
+    int[][] defaultPuzzle = new int[][]{
             {0,0,1,1,1,0,0},
             {0,0,1,1,1,0,0},
             {1,1,1,1,1,1,1},
@@ -39,25 +62,12 @@ public class PuzzleSolverTest {
             {0,0,1,1,1,0,0},
             {0,0,1,1,1,0,0}};
 
-
-    @Test
-    public void checkPuzzle_PuzzleIsIdentical() {
-        int[][] puzzle = new int[][]{
-                {0,0,1,1,1,0,0},
-                {0,0,1,1,1,0,0},
-                {1,1,1,1,1,1,1},
-                {1,1,1,2,1,1,1},
-                {1,1,1,1,1,1,1},
-                {0,0,1,1,1,0,0},
-                {0,0,1,1,1,0,0}};
-
-        try {
-            int[][] puzzle2 = FileHelper.getPuzzleFromFile("test.puzzle");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-    }
+    int[][] unsolvablePuzzle = new int[][]{
+            {0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0},
+            {1,1,1,1,1,1,1},
+            {1,1,1,1,1,1,1},
+            {1,1,1,1,1,1,1},
+            {0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0}};
 }
