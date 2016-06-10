@@ -56,6 +56,7 @@ public class PuzzleSolver extends Observable {
     public void revertLastMove() {
         _moves.pop();
         _nbSticks++;
+        notifyObservers();
     }
 
     public boolean isPuzzleSolved() {
