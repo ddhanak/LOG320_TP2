@@ -16,15 +16,18 @@ public class PuzzleSolverTest {
 
     @Test
     public void solvePuzzle_PuzzleWithSolution_PuzzleSolved() {
-        PuzzleSolver solver = makePuzzleSolver();
+        PuzzleSolver solver = new PuzzleSolver(defaultPuzzle);
         assertTrue(solver.solvePuzzle());
         assertEquals(1, solver.getNbSticks());
-        System.out.println("Nombre de noeuds visités : " + solver.getNbPositionsVisited());
-        System.out.println("Solution : ");
+        showResults(solver);
+    }
 
-        for (Move move : solver.getMoves()) {
-            System.out.println(move.getStart() + " to " + move.getEnd());
-        }
+    @Test
+    public void solvePuzzle_BigPuzzle_PuzzleSolved() {
+        PuzzleSolver solver = new PuzzleSolver(bigPuzzle);
+        assertTrue(solver.solvePuzzle());
+        assertEquals(1, solver.getNbSticks());
+        showResults(solver);
     }
 
     @Test
@@ -55,8 +58,13 @@ public class PuzzleSolverTest {
         }
     }
 
-    PuzzleSolver makePuzzleSolver() {
-        return new PuzzleSolver(defaultPuzzle);
+    private void showResults(PuzzleSolver solver) {
+        System.out.println("Nombre de noeuds visités : " + solver.getNbPositionsVisited());
+        System.out.println("Solution : ");
+
+        for (Move move : solver.getMoves()) {
+            System.out.println(move.getStart() + " to " + move.getEnd());
+        }
     }
 
     int[][] defaultPuzzle = new int[][]{
@@ -67,6 +75,36 @@ public class PuzzleSolverTest {
             {1,1,1,1,1,1,1},
             {0,0,1,1,1,0,0},
             {0,0,1,1,1,0,0}};
+
+    int [][] bigPuzzle = new int [][] {
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0},
+            {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0}};
 
     int[][] unsolvablePuzzle = new int[][]{
             {0,0,1,1,1,0,0},
