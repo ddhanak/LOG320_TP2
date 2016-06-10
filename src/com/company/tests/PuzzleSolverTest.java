@@ -23,7 +23,7 @@ public class PuzzleSolverTest {
         showResults(solver);
     }
 
-    @Test
+
     public void solvePuzzle_BigPuzzle_PuzzleSolved() {
         PuzzleSolver solver = new PuzzleSolver(gPuzzleBig);
         assertTrue(solver.solvePuzzle());
@@ -31,13 +31,13 @@ public class PuzzleSolverTest {
         showResults(solver);
     }
 
-    @Test
+
     public void solvePuzzle_PuzzleWithNoSolution_ReturnsFalse() {
         PuzzleSolver solver = new PuzzleSolver(gPuzzleUnSolvable);
         assertFalse(solver.solvePuzzle());
     }
 
-    @Test
+
     public void checkPuzzle_PuzzleIsIdentical() throws IOException {
         int[][] puzzle1 = new int[][]{
                 {1,0,1,1,1,0,2},

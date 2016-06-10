@@ -56,20 +56,32 @@ public class GridPanel extends JPanel implements Observer{
 
     private void updateGrid(){
 
-        for(int i = 0 ; i<gPuzzle.getLength();i++){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-            for(int j = 0; j<gPuzzle.getLength();j++){
+                for(int i = 0 ; i<gPuzzle.getLength();i++){
 
-                    myButtons[i][j].setColor(Color.GRAY);
-                    if(gPuzzle.getCase(i,j) == 0){
-                        myButtons[i][j].setVisible(false);
+                    for(int j = 0; j<gPuzzle.getLength();j++){
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        myButtons[i][j].setColor(Color.GRAY);
+                        if(gPuzzle.getCase(i,j) == 0){
+                            myButtons[i][j].setVisible(false);
+                        }
+                        else if(gPuzzle.getCase(i,j) == 2) {
+                            myButtons[i][j].setColor(Color.BLACK);
+                        }
+
                     }
-                    else if(gPuzzle.getCase(i,j) == 2) {
-                        myButtons[i][j].setColor(Color.BLACK);
-                    }
 
+                }
             }
-        }
+        }).start();
+
         validate();
         repaint();
     }
