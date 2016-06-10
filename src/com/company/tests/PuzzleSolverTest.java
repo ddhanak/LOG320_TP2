@@ -1,6 +1,7 @@
 package com.company.tests;
 
 import com.company.FileHelper;
+import com.company.Move;
 import com.company.PuzzleSolver;
 import org.junit.Test;
 
@@ -18,12 +19,17 @@ public class PuzzleSolverTest {
         PuzzleSolver solver = makePuzzleSolver();
         assertTrue(solver.solvePuzzle());
         assertEquals(1, solver.getNbSticks());
+        System.out.println("Nombre de noeuds visités : " + solver.getNbPositionsVisited());
+        System.out.println("Solution : ");
+
+        for (Move move : solver.getMoves()) {
+            System.out.println(move.getStart() + " to " + move.getEnd());
+        }
     }
 
     @Test
     public void solvePuzzle_PuzzleWithNoSolution_ReturnsFalse() {
-        PuzzleSolver solver = makePuzzleSolver();
-        solver.setPuzzle(unsolvablePuzzle);
+        PuzzleSolver solver = new PuzzleSolver(unsolvablePuzzle);
         assertFalse(solver.solvePuzzle());
     }
 

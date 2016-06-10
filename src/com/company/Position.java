@@ -12,4 +12,9 @@ public class Position {
 
     public int X;
     public int Y;
+
+    @Override
+    public String toString() {
+        return "(" + X + ", " + Y + ")";
+    }
 }

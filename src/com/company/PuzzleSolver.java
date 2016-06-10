@@ -6,16 +6,22 @@ import java.util.Stack;
 
 public class PuzzleSolver extends Observable {
     private static final int NOT_ON_PUZZLE = 0;
-    private static final int OCCUPIED = 1;
+    private static final int STICK = 1;
     private static final int EMPTY = 2;
 
     private int[][] _puzzle;
     private Stack<Move> _moves;
     private int _nbSticks;
+    private int _nbPositionsVisited;
 
     public PuzzleSolver(int[][] puzzle) {
         _puzzle = puzzle;
         _moves = new Stack<>();
+        _nbSticks = calculateNbSticks(puzzle);
+    }
+
+    public int getNbPositionsVisited() {
+        return _nbPositionsVisited;
     }
 
     public Stack<Move> getMoves() {
@@ -24,10 +30,6 @@ public class PuzzleSolver extends Observable {
 
     public int getNbSticks() {
         return _nbSticks;
-    }
-
-    public void setPuzzle(int[][] _puzzle) {
-        this._puzzle = _puzzle;
     }
 
     public boolean solvePuzzle() {
@@ -66,10 +68,11 @@ public class PuzzleSolver extends Observable {
     public void makeMove(Move move) {
         _puzzle[move.getStart().X][move.getStart().Y] = EMPTY;
         _puzzle[move.getMiddle().X][move.getMiddle().Y] = EMPTY;
-        _puzzle[move.getEnd().X][move.getEnd().Y] = OCCUPIED;
+        _puzzle[move.getEnd().X][move.getEnd().Y] = STICK;
 
         _moves.add(move);
-        _nbSticks++;
+        _nbSticks--;
+        _nbPositionsVisited++;
         notifyObservers();
     }
 
@@ -94,25 +97,38 @@ public class PuzzleSolver extends Observable {
         ArrayList<Move> possibleMoves =  new ArrayList<>();
 
         // LEFT
-        if (y >= 2 && _puzzle[x][y - 1] == OCCUPIED && _puzzle[x][y - 2] == EMPTY) {
+        if (y >= 2 && _puzzle[x][y - 1] == STICK && _puzzle[x][y - 2] == EMPTY) {
             possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 2)));
         }
 
         // RIGHT
-        if (_puzzle.length > y + 2 && _puzzle[x][y + 1] == OCCUPIED && _puzzle[x][y + 2] == EMPTY) {
+        if (_puzzle.length > y + 2 && _puzzle[x][y + 1] == STICK && _puzzle[x][y + 2] == EMPTY) {
             possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 2)));
         }
 
         // UP
-        if (x >= 2 && _puzzle[x - 1][y] == OCCUPIED && _puzzle[x - 2][y] == EMPTY) {
+        if (x >= 2 && _puzzle[x - 1][y] == STICK && _puzzle[x - 2][y] == EMPTY) {
             possibleMoves.add(new Move(new Position(x, y), new Position(x - 2, y)));
         }
 
         // DOWN
-        if (_puzzle.length > x + 2 && _puzzle[x + 1][y] == OCCUPIED && _puzzle[x + 2][y] == EMPTY) {
+        if (_puzzle.length > x + 2 && _puzzle[x + 1][y] == STICK && _puzzle[x + 2][y] == EMPTY) {
             possibleMoves.add(new Move(new Position(x, y), new Position(x + 2, y)));
         }
 
         return possibleMoves;
+    }
+
+    private int calculateNbSticks(int[][] puzzle) {
+        int nbSticks = 0;
+
+        for (int x = 0; x != _puzzle.length; x++) {
+            for (int y = 0; y != _puzzle.length; y++) {
+                if (puzzle[x][y] == STICK)
+                    nbSticks++;
+            }
+        }
+
+        return nbSticks;
     }
 }
