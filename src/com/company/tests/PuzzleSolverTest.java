@@ -60,6 +60,7 @@ public class PuzzleSolverTest {
 
     private void showResults(PuzzleSolver solver) {
         System.out.println("Nombre de noeuds visités : " + solver.getNbPositionsVisited());
+        System.out.println("Nombre de coups de la solution : " + solver.getMoves().size());
         System.out.println("Solution : ");
 
         for (Move move : solver.getMoves()) {
