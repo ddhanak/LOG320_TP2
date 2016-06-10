@@ -6,6 +6,7 @@ import com.company.PuzzleSolver;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.Observer;
 
 /**
  * Created by Walid on 2016-06-01.

@@ -138,7 +138,7 @@ public class PuzzleSolverTest {
             {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,},
             {0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,}};
 
-    GridPuzzle gPuzzleBig = new GridPuzzle(defaultPuzzle);
+    GridPuzzle gPuzzleBig = new GridPuzzle(bigPuzzle);
 
 
     int[][] unsolvablePuzzle = new int[][]{
@@ -150,6 +150,6 @@ public class PuzzleSolverTest {
             {0,0,1,1,1,0,0},
             {0,0,1,1,1,0,0}};
 
-    GridPuzzle gPuzzleUnSolvable = new GridPuzzle(defaultPuzzle);
+    GridPuzzle gPuzzleUnSolvable = new GridPuzzle(unsolvablePuzzle);
 
 }

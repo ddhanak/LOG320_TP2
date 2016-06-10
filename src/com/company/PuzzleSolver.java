@@ -9,18 +9,18 @@ public class PuzzleSolver extends Observable {
     private static final int STICK = 1;
     private static final int EMPTY = 2;
 
-   // private int[][] _puzzle;
+    // private int[][] _puzzle;
     private Stack<Move> _moves;
     private int _nbSticks;
     private int _nbPositionsVisited;
     private GridPuzzle gPuzzle;
 
-   /* public PuzzleSolver(int[][] puzzle) {
-        _puzzle = puzzle;
-        _moves = new Stack<>();
-        _nbSticks = calculateNbSticks(puzzle);
-    }
-*/
+    /* public PuzzleSolver(int[][] puzzle) {
+         _puzzle = puzzle;
+         _moves = new Stack<>();
+         _nbSticks = calculateNbSticks(puzzle);
+     }
+ */
     public PuzzleSolver(GridPuzzle gPuzzle) {
         this.gPuzzle = gPuzzle;
         _moves = new Stack<>();
