@@ -65,7 +65,12 @@ public class PuzzleSolver extends Observable {
     }
 
     public void revertLastMove() {
-        _moves.pop();
+        Move lastMove = _moves.pop();
+
+        gPuzzle.setCase(lastMove.getStart().X,lastMove.getStart().Y,STICK);
+        gPuzzle.setCase(lastMove.getMiddle().X,lastMove.getMiddle().Y,STICK);
+        gPuzzle.setCase(lastMove.getEnd().X,lastMove.getEnd().Y,EMPTY);
+
         _nbSticks++;
         setChanged();
         notifyObservers();

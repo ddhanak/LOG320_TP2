@@ -31,7 +31,7 @@ public class PuzzleSolverTest {
         showResults(solver);
     }
 
-
+    @Test
     public void solvePuzzle_PuzzleWithNoSolution_ReturnsFalse() {
         PuzzleSolver solver = new PuzzleSolver(gPuzzleUnSolvable);
         assertFalse(solver.solvePuzzle());
