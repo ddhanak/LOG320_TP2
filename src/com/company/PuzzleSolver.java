@@ -72,8 +72,8 @@ public class PuzzleSolver extends Observable {
         gPuzzle.setCase(lastMove.getEnd().X,lastMove.getEnd().Y,EMPTY);
 
         _nbSticks++;
-        setChanged();
-        notifyObservers();
+      //  setChanged();
+      //  notifyObservers();
     }
 
     public boolean isPuzzleSolved() {
@@ -88,8 +88,8 @@ public class PuzzleSolver extends Observable {
         _moves.add(move);
         _nbSticks--;
         _nbPositionsVisited++;
-        setChanged();
-        notifyObservers();
+      //  setChanged();
+     //   notifyObservers();
     }
 
     public ArrayList<Move> getPossibleMoves() {
