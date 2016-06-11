@@ -13,8 +13,9 @@ public class OptionPanel extends JPanel {
 
     private JButton openButton;
     private JButton solveButton;
-    private  JButton solutionButton;
+    private  JButton slowButton;
     private GridPanel gPanel;
+    public static  boolean slow = false;
 
     public OptionPanel(GridPanel gPanel){
            super();
@@ -29,11 +30,11 @@ public class OptionPanel extends JPanel {
         openButton.addActionListener(myListener);
         solveButton = new JButton("Résoudre");
         solveButton.addActionListener(myListener);
-        solutionButton = new JButton("Solutionner");
-        solutionButton.addActionListener(myListener);
+        slowButton = new JButton("Mode ralenti");
+        slowButton.addActionListener(myListener);
         this.add(openButton);
         this.add(solveButton);
-        this.add(solutionButton);
+        this.add(slowButton);
 
     }
 
@@ -54,11 +55,14 @@ public class OptionPanel extends JPanel {
                 }
             }
             else if(e.getSource() == solveButton) {
+                    slow = false;
                     gPanel.solve();
 
             }
-            else if(e.getSource() == solutionButton) {
+            else if(e.getSource() == slowButton) {
+                    slow = true;
                     gPanel.solve();
+
             }
         }
     }

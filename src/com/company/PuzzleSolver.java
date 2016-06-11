@@ -21,6 +21,7 @@ public class PuzzleSolver extends Observable {
     }
 
     public boolean solvePuzzle() {
+
         if (_nbSticks == 1) {
             return true;
         }
@@ -28,7 +29,7 @@ public class PuzzleSolver extends Observable {
         ArrayList<Move> possibleMoves = getPossibleMoves();
 
         if (possibleMoves.size() == 0) {
-           return false;
+            return false;
         }
 
         for (Move move : possibleMoves) {
@@ -54,8 +55,8 @@ public class PuzzleSolver extends Observable {
         gPuzzle.setCase(lastMove.getEnd().X,lastMove.getEnd().Y,EMPTY);
 
         _nbSticks++;
-      //  setChanged();
-      //  notifyObservers();
+        //  setChanged();
+        //  notifyObservers();
     }
 
     public void makeMove(Move move) {
@@ -66,8 +67,8 @@ public class PuzzleSolver extends Observable {
         _moves.add(move);
         _nbSticks--;
         _nbPositionsVisited++;
-      //  setChanged();
-     //   notifyObservers();
+        //  setChanged();
+        //   notifyObservers();
     }
 
     public ArrayList<Move> getPossibleMoves() {

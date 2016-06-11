@@ -9,9 +9,15 @@ public class Position {
         X = x;
         Y = y;
     }
+    public Position(int x, int y, int v) {
+        X = x;
+        Y = y;
+        V = v;
+    }
 
     public int X;
     public int Y;
+    public int V;
 
     @Override
     public String toString() {
