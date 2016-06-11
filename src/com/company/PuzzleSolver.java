@@ -35,10 +35,6 @@ public class PuzzleSolver extends Observable {
         return _moves;
     }
 
-    public int getNbSticks() {
-        return _nbSticks;
-    }
-
     public boolean solvePuzzle() {
         if (isPuzzleSolved())
             return true;
@@ -135,7 +131,7 @@ public class PuzzleSolver extends Observable {
         return possibleMoves;
     }
 
-    private int calculateNbSticks() {
+    public int calculateNbSticks() {
         int nbSticks = 0;
 
         for (int x = 0; x != gPuzzle.getLength(); x++) {

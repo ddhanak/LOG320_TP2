@@ -19,7 +19,7 @@ public class PuzzleSolverTest {
     public void solvePuzzle_PuzzleWithSolution_PuzzleSolved() {
         PuzzleSolver solver = new PuzzleSolver(gPuzzleDefault);
         assertTrue(solver.solvePuzzle());
-        assertEquals(1, solver.getNbSticks());
+        assertEquals(1, solver.calculateNbSticks());
         showResults(solver);
     }
 
