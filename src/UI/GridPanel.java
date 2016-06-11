@@ -94,10 +94,11 @@ public class GridPanel extends JPanel implements Observer{
                     else if(element.V == 2) {
                         myButtons[element.X][element.Y].setColor(Color.BLACK);
                     }
+                    System.out.println("(X,Y,V) = " + element.X+","+element.Y+","+element.V);
                     validate();
                     repaint();
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
