@@ -1,6 +1,7 @@
 package UI;
 
 import com.company.GridPuzzle;
+import com.company.Position;
 import com.company.PuzzleSolver;
 
 import javax.swing.*;
@@ -16,6 +17,7 @@ public class GridPanel extends JPanel implements Observer{
     private GridPuzzle gPuzzle;
     private PuzzleSolver pSolver;
     private BoxSquareGrid[][] myButtons;
+    private static  int cnt = 0;
 
     public GridPanel(GridPuzzle gPuzzle, PuzzleSolver pSolver){
         super();
@@ -56,18 +58,11 @@ public class GridPanel extends JPanel implements Observer{
 
     private void updateGrid(){
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
 
                 for(int i = 0 ; i<gPuzzle.getLength();i++){
 
                     for(int j = 0; j<gPuzzle.getLength();j++){
-                        try {
-                            Thread.sleep(200);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+
                         myButtons[i][j].setColor(Color.GRAY);
                         if(gPuzzle.getCase(i,j) == 0){
                             myButtons[i][j].setVisible(false);
@@ -78,9 +73,9 @@ public class GridPanel extends JPanel implements Observer{
 
                     }
 
-                }
+
             }
-        }).start();
+
 
         validate();
         repaint();
@@ -102,6 +97,16 @@ public class GridPanel extends JPanel implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        updateGrid();
+        Position p = (Position) arg;
+        System.out.println("(X,Y)=" + p.X +","+p.Y);
+        if(gPuzzle.getCase(p.X,p.Y) == 1) {
+            myButtons[p.X][p.Y].setColor(Color.GRAY);
+        }
+        if(gPuzzle.getCase(p.X,p.Y) == 2) {
+            myButtons[p.X][p.Y].setColor(Color.BLACK);
+        }
+
+       // System.out.print(cnt++);
+      //  updateGrid();
     }
 }

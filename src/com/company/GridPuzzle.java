@@ -24,7 +24,7 @@ public class GridPuzzle extends Observable {
     public void setCase(int i, int j, int value) {
         grid[i][j] = value;
         setChanged();
-        notifyObservers();
+        notifyObservers(new Position(i,j));
     }
 
     public int getLength(){
