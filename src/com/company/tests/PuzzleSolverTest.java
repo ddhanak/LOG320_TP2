@@ -22,6 +22,12 @@ public class PuzzleSolverTest {
         assertEquals(1, solver.getNbSticks());
         showResults(solver);
     }
+    
+    @Test
+    public void solvePuzzle_PuzzleWithNoSolution_ReturnsFalse() {
+        PuzzleSolver solver = new PuzzleSolver(gPuzzleUnSolvable);
+        assertFalse(solver.solvePuzzle());
+    }
 
 
     public void solvePuzzle_BigPuzzle_PuzzleSolved() {
@@ -30,13 +36,6 @@ public class PuzzleSolverTest {
         assertEquals(1, solver.calculateNbSticks());
         showResults(solver);
     }
-
-
-    public void solvePuzzle_PuzzleWithNoSolution_ReturnsFalse() {
-        PuzzleSolver solver = new PuzzleSolver(gPuzzleUnSolvable);
-        assertFalse(solver.solvePuzzle());
-    }
-
 
     public void checkPuzzle_PuzzleIsIdentical() throws IOException {
         int[][] puzzle1 = new int[][]{
