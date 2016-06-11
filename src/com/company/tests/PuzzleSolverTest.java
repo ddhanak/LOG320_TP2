@@ -18,8 +18,8 @@ public class PuzzleSolverTest {
     @Test
     public void solvePuzzle_PuzzleWithSolution_PuzzleSolved() {
         PuzzleSolver solver = new PuzzleSolver(gPuzzleDefault);
-        assertTrue(solver.solvePuzzle());
-        assertEquals(1, solver.calculateNbSticks());
+        assertTrue("Le puzzle a été résolu.", solver.solvePuzzle());
+        assertEquals(1, solver.getNbSticks());
         showResults(solver);
     }
 
@@ -27,7 +27,7 @@ public class PuzzleSolverTest {
     public void solvePuzzle_BigPuzzle_PuzzleSolved() {
         PuzzleSolver solver = new PuzzleSolver(gPuzzleBig);
         assertTrue(solver.solvePuzzle());
-        assertEquals(1, solver.getNbSticks());
+        assertEquals(1, solver.calculateNbSticks());
         showResults(solver);
     }
 

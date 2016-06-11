@@ -9,52 +9,38 @@ public class PuzzleSolver extends Observable {
     private static final int STICK = 1;
     private static final int EMPTY = 2;
 
-    // private int[][] _puzzle;
     private Stack<Move> _moves;
-    private int _nbSticks;
     private int _nbPositionsVisited;
     private GridPuzzle gPuzzle;
+    private int _nbSticks;
 
-    /* public PuzzleSolver(int[][] puzzle) {
-         _puzzle = puzzle;
-         _moves = new Stack<>();
-         _nbSticks = calculateNbSticks(puzzle);
-     }
- */
     public PuzzleSolver(GridPuzzle gPuzzle) {
         this.gPuzzle = gPuzzle;
         _moves = new Stack<>();
         _nbSticks = calculateNbSticks();
     }
 
-    public int getNbPositionsVisited() {
-        return _nbPositionsVisited;
-    }
-
-    public Stack<Move> getMoves() {
-        return _moves;
-    }
-
     public boolean solvePuzzle() {
-        if (isPuzzleSolved())
+        if (_nbSticks == 1) {
             return true;
+        }
 
         ArrayList<Move> possibleMoves = getPossibleMoves();
 
         if (possibleMoves.size() == 0) {
-            if (_moves.size() == 0)
-                // On est au premier essai ou revenu au début et il y a aucun déplacement possible.
-                return false;
-
-            revertLastMove();
+           return false;
         }
 
         for (Move move : possibleMoves) {
             makeMove(move);
 
             // On tente de résoudre le puzzle avec une tige en moins
-            if (solvePuzzle())
+            if (solvePuzzle()) {
                 return true;
+            }
+            else {
+                revertLastMove();
+            }
         }
 
         return false;
@@ -72,18 +58,14 @@ public class PuzzleSolver extends Observable {
         notifyObservers();
     }
 
-    public boolean isPuzzleSolved() {
-        return _nbSticks == 1;
-    }
-
     public void makeMove(Move move) {
         gPuzzle.setCase(move.getStart().X,move.getStart().Y,EMPTY);
         gPuzzle.setCase(move.getMiddle().X,move.getMiddle().Y,EMPTY);
         gPuzzle.setCase(move.getEnd().X,move.getEnd().Y,STICK);
 
         _moves.add(move);
-        _nbSticks--;
         _nbPositionsVisited++;
+        _nbSticks--;
         setChanged();
         notifyObservers();
     }
@@ -142,5 +124,17 @@ public class PuzzleSolver extends Observable {
         }
 
         return nbSticks;
+    }
+
+    public int getNbSticks() {
+        return _nbSticks;
+    }
+
+    public int getNbPositionsVisited() {
+        return _nbPositionsVisited;
+    }
+
+    public Stack<Move> getMoves() {
+        return _moves;
     }
 }
