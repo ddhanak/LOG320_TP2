@@ -22,12 +22,15 @@ public class PuzzleSolver extends Observable {
     }
 
     public boolean solvePuzzle() {
+        // On va chercher tous les coups possible sur le puzzle.
         List<Move> possibleMoves = getPossibleMoves();
 
         for (Move move : possibleMoves) {
+            // Pour chaque coup possible, on tente de le jouer.
             makeMove(move);
 
-            // On tente de résoudre le puzzle avec une tige en moins
+            // Si le nouvel état du puzzle peut mener à une solution, on retourne qu'on l'a résolu.
+            // Sinon, on annule le coup et on essaie le suivant.
             if (solvePuzzle()) {
                 return true;
             }
@@ -36,6 +39,9 @@ public class PuzzleSolver extends Observable {
             }
         }
 
+        // Si on se rend ici, on a essayé toutes les possibilités à partir de l'état actuel.
+        // Si il reste une tige, le puzzle est résolu. Sinon, on retourne que l'état actuel n'a
+        // pas pu mener à une solution.
         return _nbSticks == 1;
     }
 
@@ -66,9 +72,11 @@ public class PuzzleSolver extends Observable {
             for (int y = 0; y != gPuzzle.getLength(); y++) {
                 int positionType = gPuzzle.getCase(x,y);
 
+                // On peut seulement déplacer des tiges.
                 if (positionType == NOT_ON_PUZZLE || positionType == EMPTY)
                     continue;
 
+                // Ici, on vérifie les coups possibles parmi les 4 possibles dans les règles du jeu.
                 // LEFT
                 if (y >= 2 && gPuzzle.getCase(x,y - 1) == STICK && gPuzzle.getCase(x,y - 2) == EMPTY) {
                     possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 2)));
