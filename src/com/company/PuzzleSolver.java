@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Stack;
 
@@ -21,16 +22,7 @@ public class PuzzleSolver extends Observable {
     }
 
     public boolean solvePuzzle() {
-
-        if (_nbSticks == 1) {
-            return true;
-        }
-
-        ArrayList<Move> possibleMoves = getPossibleMoves();
-
-        if (possibleMoves.size() == 0) {
-            return false;
-        }
+        List<Move> possibleMoves = getPossibleMoves();
 
         for (Move move : possibleMoves) {
             makeMove(move);
@@ -44,7 +36,7 @@ public class PuzzleSolver extends Observable {
             }
         }
 
-        return false;
+        return _nbSticks == 1;
     }
 
     public void revertLastMove() {
@@ -55,8 +47,6 @@ public class PuzzleSolver extends Observable {
         gPuzzle.setCase(lastMove.getEnd().X,lastMove.getEnd().Y,EMPTY);
 
         _nbSticks++;
-        //  setChanged();
-        //  notifyObservers();
     }
 
     public void makeMove(Move move) {
@@ -67,12 +57,10 @@ public class PuzzleSolver extends Observable {
         _moves.add(move);
         _nbSticks--;
         _nbPositionsVisited++;
-        //  setChanged();
-        //   notifyObservers();
     }
 
-    public ArrayList<Move> getPossibleMoves() {
-        ArrayList<Move> possibleMoves = new ArrayList<Move>();
+    public List<Move> getPossibleMoves() {
+        ArrayList<Move> possibleMoves = new ArrayList<>();
 
         for (int x = 0; x != gPuzzle.getLength(); x++) {
             for (int y = 0; y != gPuzzle.getLength(); y++) {
@@ -81,34 +69,26 @@ public class PuzzleSolver extends Observable {
                 if (positionType == NOT_ON_PUZZLE || positionType == EMPTY)
                     continue;
 
-                possibleMoves.addAll(getPossibleMovesForPosition(x, y));
+                // LEFT
+                if (y >= 2 && gPuzzle.getCase(x,y - 1) == STICK && gPuzzle.getCase(x,y - 2) == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 2)));
+                }
+
+                // RIGHT
+                if (gPuzzle.getLength()> y + 2 && gPuzzle.getCase(x,y + 1) == STICK && gPuzzle.getCase(x,y + 2) == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 2)));
+                }
+
+                // UP
+                if (x >= 2 && gPuzzle.getCase(x - 1,y) == STICK && gPuzzle.getCase(x - 2,y) == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x - 2, y)));
+                }
+
+                // DOWN
+                if (gPuzzle.getLength() > x + 2 && gPuzzle.getCase(x + 1,y) == STICK && gPuzzle.getCase(x + 2,y) == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x + 2, y)));
+                }
             }
-        }
-
-        return possibleMoves;
-    }
-
-    public ArrayList<Move> getPossibleMovesForPosition(int x, int y) {
-        ArrayList<Move> possibleMoves =  new ArrayList<>();
-
-        // LEFT
-        if (y >= 2 && gPuzzle.getCase(x,y - 1) == STICK && gPuzzle.getCase(x,y - 2) == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 2)));
-        }
-
-        // RIGHT
-        if (gPuzzle.getLength()> y + 2 && gPuzzle.getCase(x,y + 1) == STICK && gPuzzle.getCase(x,y + 2) == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 2)));
-        }
-
-        // UP
-        if (x >= 2 && gPuzzle.getCase(x - 1,y) == STICK && gPuzzle.getCase(x - 2,y) == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x - 2, y)));
-        }
-
-        // DOWN
-        if (gPuzzle.getLength() > x + 2 && gPuzzle.getCase(x + 1,y) == STICK && gPuzzle.getCase(x + 2,y) == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x + 2, y)));
         }
 
         return possibleMoves;
