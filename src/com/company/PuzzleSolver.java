@@ -22,6 +22,10 @@ public class PuzzleSolver extends Observable {
     }
 
     public boolean solvePuzzle() {
+        // Si il reste une tige, le puzzle est résolu.
+        if (_nbSticks == 1)
+            return true;
+
         // On va chercher tous les coups possible sur le puzzle.
         List<Move> possibleMoves = getPossibleMoves();
 
@@ -39,10 +43,8 @@ public class PuzzleSolver extends Observable {
             }
         }
 
-        // Si on se rend ici, on a essayé toutes les possibilités à partir de l'état actuel.
-        // Si il reste une tige, le puzzle est résolu. Sinon, on retourne que l'état actuel n'a
-        // pas pu mener à une solution.
-        return _nbSticks == 1;
+        // Si on se rend ici, on a essayé toutes les possibilités sans succès.
+        return false;
     }
 
     public void revertLastMove() {
