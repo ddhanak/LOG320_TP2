@@ -48,17 +48,17 @@ public class PuzzleSolver extends Observable {
     public void revertLastMove() {
         Move lastMove = _moves.pop();
 
-        gPuzzle.setCase(lastMove.getStart().X,lastMove.getStart().Y,STICK);
-        gPuzzle.setCase(lastMove.getMiddle().X,lastMove.getMiddle().Y,STICK);
-        gPuzzle.setCase(lastMove.getEnd().X,lastMove.getEnd().Y,EMPTY);
+        gPuzzle.setCase(lastMove.start.x,lastMove.start.y,STICK);
+        gPuzzle.setCase(lastMove.jumpedOver.x,lastMove.jumpedOver.y,STICK);
+        gPuzzle.setCase(lastMove.end.x,lastMove.end.y,EMPTY);
 
         _nbSticks++;
     }
 
     public void makeMove(Move move) {
-        gPuzzle.setCase(move.getStart().X,move.getStart().Y,EMPTY);
-        gPuzzle.setCase(move.getMiddle().X,move.getMiddle().Y,EMPTY);
-        gPuzzle.setCase(move.getEnd().X,move.getEnd().Y,STICK);
+        gPuzzle.setCase(move.start.x,move.start.y,EMPTY);
+        gPuzzle.setCase(move.jumpedOver.x,move.jumpedOver.y,EMPTY);
+        gPuzzle.setCase(move.end.x,move.end.y,STICK);
 
         _moves.add(move);
         _nbSticks--;
@@ -79,22 +79,22 @@ public class PuzzleSolver extends Observable {
                 // Ici, on vérifie les coups possibles parmi les 4 possibles dans les règles du jeu.
                 // LEFT
                 if (y >= 2 && gPuzzle.getCase(x,y - 1) == STICK && gPuzzle.getCase(x,y - 2) == EMPTY) {
-                    possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 2)));
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 1), new Position(x, y - 2)));
                 }
 
                 // RIGHT
                 if (gPuzzle.getLength()> y + 2 && gPuzzle.getCase(x,y + 1) == STICK && gPuzzle.getCase(x,y + 2) == EMPTY) {
-                    possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 2)));
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 1), new Position(x, y + 2)));
                 }
 
                 // UP
                 if (x >= 2 && gPuzzle.getCase(x - 1,y) == STICK && gPuzzle.getCase(x - 2,y) == EMPTY) {
-                    possibleMoves.add(new Move(new Position(x, y), new Position(x - 2, y)));
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x - 1, y), new Position(x - 2, y)));
                 }
 
                 // DOWN
                 if (gPuzzle.getLength() > x + 2 && gPuzzle.getCase(x + 1,y) == STICK && gPuzzle.getCase(x + 2,y) == EMPTY) {
-                    possibleMoves.add(new Move(new Position(x, y), new Position(x + 2, y)));
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x + 1, y), new Position(x + 2, y)));
                 }
             }
         }

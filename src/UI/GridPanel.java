@@ -88,13 +88,13 @@ public class GridPanel extends JPanel implements Observer{
             @Override
             public void run() {
                 for(Position element : myPositions) {
-                    if(element.V == 1) {
-                        myButtons[element.X][element.Y].setColor(Color.GRAY);
+                    if(element.v == 1) {
+                        myButtons[element.x][element.y].setColor(Color.GRAY);
                     }
-                    else if(element.V == 2) {
-                        myButtons[element.X][element.Y].setColor(Color.BLACK);
+                    else if(element.v == 2) {
+                        myButtons[element.x][element.y].setColor(Color.BLACK);
                     }
-                    System.out.println("(X,Y,V) = " + element.X+","+element.Y+","+element.V);
+                    System.out.println("(X,Y,V) = " + element.x +","+element.y +","+element.v);
                     validate();
                     repaint();
                     try {
@@ -130,13 +130,13 @@ public class GridPanel extends JPanel implements Observer{
 
 
             Position p = (Position) arg;
-           myPositions.add(new Position(p.X,p.Y,gPuzzle.getCase(p.X,p.Y)));
+           myPositions.add(new Position(p.x,p.y,gPuzzle.getCase(p.x,p.y)));
            if(!OptionPanel.slow) {
-            if (gPuzzle.getCase(p.X, p.Y) == 1) {
-                myButtons[p.X][p.Y].setColor(Color.GRAY);
+            if (gPuzzle.getCase(p.x, p.y) == 1) {
+                myButtons[p.x][p.y].setColor(Color.GRAY);
             }
-            if (gPuzzle.getCase(p.X, p.Y) == 2) {
-                myButtons[p.X][p.Y].setColor(Color.BLACK);
+            if (gPuzzle.getCase(p.x, p.y) == 2) {
+                myButtons[p.x][p.y].setColor(Color.BLACK);
             }
 
             validate();

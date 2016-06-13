@@ -6,21 +6,21 @@ package com.company;
 public class Position {
 
     public Position(int x, int y) {
-        X = x;
-        Y = y;
+        this.x = x;
+        this.y = y;
     }
     public Position(int x, int y, int v) {
-        X = x;
-        Y = y;
-        V = v;
+        this.x = x;
+        this.y = y;
+        this.v = v;
     }
 
-    public int X;
-    public int Y;
-    public int V;
+    public int x;
+    public int y;
+    public int v;
 
     @Override
     public String toString() {
-        return "(" + X + ", " + Y + ")";
+        return "(" + x + ", " + y + ")";
     }
 }
