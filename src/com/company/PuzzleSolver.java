@@ -1,10 +1,11 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Stack;
 
-public class PuzzleSolver extends Observable {
+public class PuzzleSolver {
     private static final int NOT_ON_PUZZLE = 0;
     private static final int STICK = 1;
     private static final int EMPTY = 2;
@@ -33,49 +34,49 @@ public class PuzzleSolver extends Observable {
     }
 
     public boolean solvePuzzle() {
-        if (isPuzzleSolved())
+        // Si il reste une tige, le puzzle est résolu.
+        if (_nbSticks == 1)
             return true;
 
-        ArrayList<Move> possibleMoves = getPossibleMoves();
-
-        if (possibleMoves.size() == 0) {
-            if (_moves.size() == 0)
-                // On est au premier essai ou revenu au début et il y a aucun déplacement possible.
-                return false;
-
-            revertLastMove();
-        }
+        // On va chercher tous les coups possible sur le puzzle.
+        List<Move> possibleMoves = getPossibleMoves();
 
         for (Move move : possibleMoves) {
+            // Pour chaque coup possible, on tente de le jouer.
             makeMove(move);
 
-            // On tente de résoudre le puzzle avec une tige en moins
-            if (solvePuzzle())
+            // Si le nouvel état du puzzle peut mener à une solution, on retourne qu'on l'a résolu.
+            // Sinon, on annule le coup et on essaie le suivant.
+            if (solvePuzzle()) {
                 return true;
+            }
+            else {
+                revertLastMove();
+            }
         }
 
+        // Si on se rend ici, on a essayé toutes les possibilités sans succès.
         return false;
     }
 
     public void revertLastMove() {
+        Move move = _moves.pop();
+
+        _puzzle[move.start.x][move.start.y] = STICK;
+        _puzzle[move.jumpedOver.x][move.jumpedOver.y] = STICK;
+        _puzzle[move.end.x][move.end.y] = EMPTY;
         _moves.pop();
         _nbSticks++;
-        notifyObservers();
-    }
-
-    public boolean isPuzzleSolved() {
-        return _nbSticks == 1;
     }
 
     public void makeMove(Move move) {
-        _puzzle[move.getStart().X][move.getStart().Y] = EMPTY;
-        _puzzle[move.getMiddle().X][move.getMiddle().Y] = EMPTY;
-        _puzzle[move.getEnd().X][move.getEnd().Y] = STICK;
+        _puzzle[move.start.x][move.start.y] = EMPTY;
+        _puzzle[move.jumpedOver.x][move.jumpedOver.y] = EMPTY;
+        _puzzle[move.end.x][move.end.y] = STICK;
 
         _moves.add(move);
         _nbSticks--;
         _nbPositionsVisited++;
-        notifyObservers();
     }
 
     public ArrayList<Move> getPossibleMoves() {
@@ -100,22 +101,22 @@ public class PuzzleSolver extends Observable {
 
         // LEFT
         if (y >= 2 && _puzzle[x][y - 1] == STICK && _puzzle[x][y - 2] == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 2)));
+            possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 1), new Position(x, y - 2)));
         }
 
         // RIGHT
         if (_puzzle.length > y + 2 && _puzzle[x][y + 1] == STICK && _puzzle[x][y + 2] == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 2)));
+            possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 1), new Position(x, y + 2)));
         }
 
         // UP
         if (x >= 2 && _puzzle[x - 1][y] == STICK && _puzzle[x - 2][y] == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x - 2, y)));
+            possibleMoves.add(new Move(new Position(x, y), new Position(x - 1, y), new Position(x - 2, y)));
         }
 
         // DOWN
         if (_puzzle.length > x + 2 && _puzzle[x + 1][y] == STICK && _puzzle[x + 2][y] == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x + 2, y)));
+            possibleMoves.add(new Move(new Position(x, y), new Position(x + 1, y), new Position(x + 2, y)));
         }
 
         return possibleMoves;

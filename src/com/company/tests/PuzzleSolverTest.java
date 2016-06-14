@@ -64,7 +64,7 @@ public class PuzzleSolverTest {
         System.out.println("Solution : ");
 
         for (Move move : solver.getMoves()) {
-            System.out.println(move.getStart() + " to " + move.getEnd());
+            System.out.println(move.start + " to " + move.end);
         }
     }
 
