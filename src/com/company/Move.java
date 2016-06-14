@@ -1,38 +1,37 @@
 package com.company;
 
+import java.text.MessageFormat;
+
 public class Move {
-    private Position start;
-    private Position end;
+    int m_fromx, m_fromy, m_tox, m_toy;
 
-    public Move(Position start, Position end) {
-        this.start = start;
-        this.end = end;
+    @Override public String toString() {
+        return MessageFormat.format("{0}({1}, {2}) -> {3}({4}, {5})",
+                Board.getPosIndex(m_fromx, m_fromy), m_fromx, m_fromy,
+                Board.getPosIndex(m_tox, m_toy), m_tox, m_toy);
     }
 
-    /**
-     * The position jumped over between start and end
-     */
-    public Position getMiddle() {
-        if (end.X > start.X)
-            return new Position(start.X + 1, start.Y);
-
-        if (end.X < start.X)
-            return new Position(start.X - 1, start.Y);
-
-        if (end.Y > start.Y)
-            return new Position(start.X, start.Y + 1);
-
-        if (end.Y < start.Y)
-            return new Position(start.X, start.Y - 1);
-
-        return null;
+    public Move(int fromx, int fromy, int tox, int toy) {
+        super();
+        this.m_fromx = fromx;
+        this.m_fromy = fromy;
+        this.m_tox = tox;
+        this.m_toy = toy;
     }
 
-    public Position getStart() {
-        return start;
+    int fromx() {
+        return m_fromx;
     }
 
-    public Position getEnd() {
-        return end;
+    int fromy() {
+        return m_fromy;
+    }
+
+    int dx() {
+        return m_tox - m_fromx;
+    }
+
+    int dy() {
+        return m_toy - m_fromy;
     }
 }
