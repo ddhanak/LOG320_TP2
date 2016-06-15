@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
- * Created by walid on 2016-06-04.
+ * Created by Equipe on 2016-06-04.
  */
 public class OptionPanel extends JPanel {
 

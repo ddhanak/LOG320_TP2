@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by Walid on 2016-06-01.
+ * Created by Equipe on 2016-06-01.
  */
 public class PrincipalPanel extends JPanel {
 

@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Created by Walid on 2016-06-01.
+ * Created by Equipe on 2016-06-01.
  */
 public class GridPanel extends JPanel implements Observer{
 

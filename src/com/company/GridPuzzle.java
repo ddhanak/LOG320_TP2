@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.Observable;
 
 /**
- * Created by walid on 2016-06-07.
+ * Created by Equipe on 2016-06-07.
  */
 public class GridPuzzle extends Observable {
     // public static final int MAXIMUM = 7;

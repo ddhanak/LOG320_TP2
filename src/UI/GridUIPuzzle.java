@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Observer;
 
 /**
- * Created by Walid on 2016-06-01.
+ * Created by Equipe on 2016-06-01.
  */
 public class GridUIPuzzle extends JFrame implements Runnable {
 

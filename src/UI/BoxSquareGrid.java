@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by Walid on 2016-06-08.
+ * Created by Equipe on 2016-06-08.
  */
 public class BoxSquareGrid extends JButton {
 
