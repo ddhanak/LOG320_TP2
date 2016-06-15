@@ -21,7 +21,7 @@ public class GridUIPuzzle extends JFrame implements Runnable {
     private  OptionPanel oPanel;
     private GridPuzzle gPuzzle;
     private PuzzleSolver pSolver;
-    private static final String gridFile = "test2.puzzle";
+    private static final String gridFile = "test.puzzle";
 
     public GridUIPuzzle(String title) {
         super(title);

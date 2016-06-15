@@ -31,5 +31,6 @@ public class BoxSquareGrid extends JButton {
 
     public void setColor(Color color) {
         this.setBackground(color);
+        this.setOpaque(true);
     }
 }
