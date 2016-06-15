@@ -99,7 +99,7 @@ public class GridPanel extends JPanel implements Observer{
                     validate();
                     repaint();
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
