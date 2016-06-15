@@ -133,4 +133,24 @@ public class PuzzleSolver {
 
         return nbSticks;
     }
+
+    public void printGridToConsole(){
+
+        int[][]puzzle = _puzzle;
+        int count = 0;
+
+        for (int i=0;i<puzzle.length;i++){
+
+            for (int j=0;j<puzzle.length;j++){
+                count++;
+
+                if(count==7){
+                    System.out.println(puzzle[i][j]);
+                }else{
+                    System.out.print(puzzle[i][j]);
+                }
+            }
+            count=0;
+        }
+    }
 }

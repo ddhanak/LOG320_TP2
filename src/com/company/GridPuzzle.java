@@ -35,4 +35,7 @@ public class GridPuzzle extends Observable {
     public void setCase(int i, int j, Color color) {
 
     }
+
+
+
 }

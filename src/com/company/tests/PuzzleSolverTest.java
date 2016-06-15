@@ -23,14 +23,6 @@ public class PuzzleSolverTest {
     }
 
     @Test
-    public void solvePuzzle_BigPuzzle_PuzzleSolved() {
-        PuzzleSolver solver = new PuzzleSolver(bigPuzzle);
-        assertTrue(solver.solvePuzzle());
-        assertEquals(1, solver.getNbSticks());
-        printResults(solver);
-    }
-
-    @Test
     public void solvePuzzle_PuzzleWithNoSolution_ReturnsFalse() {
         PuzzleSolver solver = new PuzzleSolver(unsolvablePuzzle);
         assertFalse(solver.solvePuzzle());
