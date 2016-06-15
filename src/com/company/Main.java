@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
 
         PuzzleSolver pSolver;
-        String gridFile = "test.puzzle";
+        String gridFile = args[0];
 
         try {
 
