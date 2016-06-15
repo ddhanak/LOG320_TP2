@@ -3,7 +3,7 @@ package com.company;
 import java.io.*;
 
 /**
- * Created by Deep on 2016-06-01.
+ * Created by Equipe on 2016-06-01.
  */
 public class FileHelper {
 

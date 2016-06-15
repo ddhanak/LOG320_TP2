@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Observer;
 
 /**
- * Created by Walid on 2016-06-01.
+ * Created by Equipe on 2016-06-01.
  */
 public class GridUIPuzzle extends JFrame implements Runnable {
 
@@ -21,7 +21,7 @@ public class GridUIPuzzle extends JFrame implements Runnable {
     private  OptionPanel oPanel;
     private GridPuzzle gPuzzle;
     private PuzzleSolver pSolver;
-    private static final String gridFile = "test2.puzzle";
+    private static final String gridFile = "test3.puzzle";
 
     public GridUIPuzzle(String title) {
         super(title);
@@ -41,7 +41,6 @@ public class GridUIPuzzle extends JFrame implements Runnable {
         menuPuzzle = new MenuPuzzle(gPanel);
         setJMenuBar(menuPuzzle);
         gPuzzle.addObserver(gPanel);
-        pSolver.addObserver(gPanel);
         this.setVisible(true);
 
     }

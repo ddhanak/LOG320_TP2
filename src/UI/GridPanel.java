@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Created by Walid on 2016-06-01.
+ * Created by Equipe on 2016-06-01.
  */
 public class GridPanel extends JPanel implements Observer{
 
@@ -54,6 +54,7 @@ public class GridPanel extends JPanel implements Observer{
 
         gPuzzle.deleteObservers();
         gPuzzle = new GridPuzzle(puzzle);
+        pSolver = new PuzzleSolver(gPuzzle);
         updateObserver();
         updateGrid();
     }
@@ -108,8 +109,17 @@ public class GridPanel extends JPanel implements Observer{
 
     }
     public void solve(){
-        if (pSolver.solvePuzzle() && OptionPanel.slow) {
-            updateGridP();
+        double startTime = System.nanoTime();
+        if (pSolver.solvePuzzle()) {
+            if(OptionPanel.slow) updateGridP();
+
+            double endTime = System.nanoTime();
+            double elapsedTime = (endTime - startTime) / 1000000000;
+            JOptionPane.showMessageDialog(null,"<html><h1>Le puzzle a été résolu avec succès</h1><h2>Nombre de noeuds visités : "+pSolver.getNbPositionsVisited()+"</h2>" +
+                                                            "<h2>Nombre de coups de la solution: " + pSolver.getMoves().size() + "</h2><h2>Temp d'execution "+elapsedTime+" secondes </h2></html>");
+        }
+        else {
+            JOptionPane.showMessageDialog(null,"<html><h1>Le puzzle n'a pas été résolu !!</h1></html>");
         }
     }
 
@@ -129,9 +139,9 @@ public class GridPanel extends JPanel implements Observer{
     public void update(Observable o, Object arg) {
 
 
-            Position p = (Position) arg;
-           myPositions.add(new Position(p.x,p.y,gPuzzle.getCase(p.x,p.y)));
-           if(!OptionPanel.slow) {
+        Position p = (Position) arg;
+       // myPositions.add(new Position(p.x,p.y,gPuzzle.getCase(p.x,p.y)));
+        if(!OptionPanel.slow) {
             if (gPuzzle.getCase(p.x, p.y) == 1) {
                 myButtons[p.x][p.y].setColor(Color.GRAY);
             }
