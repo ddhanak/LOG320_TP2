@@ -7,6 +7,15 @@ public class PuzzleSolver {
     private static final int STICK = 1;
     private static final int EMPTY = 2;
 
+    private static final int[][] WEIGHTS = {
+            {3,3,3,3,3,3,3},
+            {3,2,2,2,2,2,3},
+            {3,2,1,1,1,2,3},
+            {3,2,1,0,1,2,3},
+            {3,2,1,1,1,2,3},
+            {3,2,2,2,2,2,3},
+            {3,3,3,3,3,3,3}};
+
     private int[][] _puzzle;
     private List<Position> _possiblePositions;
     private Stack<Move> _moves;
@@ -49,7 +58,6 @@ public class PuzzleSolver {
             } else {
                 _badBoardStates.add(getPuzzleString(_puzzle));
                 revertLastMove();
-
             }
         }
 
@@ -57,47 +65,47 @@ public class PuzzleSolver {
         return false;
     }
 
-    public Move getBestMove(List<Move> possibleMoves) {
-        Move bestMove = possibleMoves.get(0);
-        int bestDeepWeight = Integer.MAX_VALUE;
+    public Move getBestMove(List<Move> possibleMoves1) {
+        Move bestMove = possibleMoves1.get(0);
+        int bestWeight = Integer.MAX_VALUE;
 
-        if (_nbSticks < 4)
-            return bestMove;
+        for (Move move1 : possibleMoves1) {
+            makeMove(move1);
+            List<Move> possibleMoves2 = getPossibleMoves();
 
-        for (Move move : possibleMoves) {
-            int deepWeight = getDeepWeight(move, 3);
+            for (Move move2 : possibleMoves2) {
+                makeMove(move2);
+                List<Move> possibleMoves3 = getPossibleMoves();
 
-            if (deepWeight < bestDeepWeight) {
-                bestDeepWeight = deepWeight;
-                bestMove = move;
+                for (Move move3 : possibleMoves3) {
+                    makeMove(move3);
+
+                    int weight = calculateBoardWeight();
+                    if (weight < bestWeight) {
+                        bestWeight = weight;
+                        bestMove = move1;
+                    }
+
+                    revertLastMove();
+                }
+
+                revertLastMove();
             }
+
+            revertLastMove();
         }
 
         return bestMove;
     }
 
-    public int getDeepWeight(Move aMove, int level) {
-        // Condition de sortie
-        if (level == 0)
-            return aMove.weight;
+    public int calculateBoardWeight() {
+        int boardWeight = 0;
 
-        makeMove(aMove);
-
-        List<Move> possibleMoves = getPossibleMoves();
-
-        int bestDeepWeight = Integer.MAX_VALUE;
-
-        for (Move move : possibleMoves) {
-            int deepWeight = getDeepWeight(move, level - 1);
-
-            if (deepWeight < bestDeepWeight) {
-                bestDeepWeight = deepWeight;
-            }
+        for (Position position : _possiblePositions) {
+            boardWeight += WEIGHTS[position.x][position.y];
         }
 
-        revertLastMove();
-
-        return aMove.weight + bestDeepWeight;
+        return boardWeight;
     }
 
     public List<Position> getPossiblePositions(int[][] puzzle) {
