@@ -12,7 +12,6 @@ public class Position {
 
     public int x;
     public int y;
-    public int v;
 
     @Override
     public String toString() {

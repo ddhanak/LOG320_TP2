@@ -1,9 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Stack;
+import java.util.*;
 
 public class PuzzleSolver {
     private static final int NOT_ON_PUZZLE = 0;
@@ -14,11 +11,13 @@ public class PuzzleSolver {
     private Stack<Move> _moves;
     private int _nbSticks;
     private int _nbPositionsVisited;
+    private HashSet<String> _badBoardStates;
 
     public PuzzleSolver(int[][] puzzle) {
         _puzzle = puzzle;
         _moves = new Stack<>();
         _nbSticks = calculateNbSticks(puzzle);
+        _badBoardStates = new HashSet<>();
     }
 
     public int getNbPositionsVisited() {
@@ -38,6 +37,10 @@ public class PuzzleSolver {
         if (_nbSticks == 1)
             return true;
 
+        if (_badBoardStates.contains(getPuzzleString(_puzzle))) {
+            return false;
+        }
+
         // On va chercher tous les coups possible sur le puzzle.
         List<Move> possibleMoves = getPossibleMoves();
 
@@ -51,6 +54,7 @@ public class PuzzleSolver {
                 return true;
             }
             else {
+                _badBoardStates.add(getPuzzleString(_puzzle));
                 revertLastMove();
             }
         }
@@ -59,13 +63,24 @@ public class PuzzleSolver {
         return false;
     }
 
+    public String getPuzzleString(int[][] puzzle) {
+        StringBuilder builder = new StringBuilder(49);
+
+        for (int x = 0; x != _puzzle.length; x++) {
+            for (int y = 0; y != _puzzle.length; y++) {
+                builder.append(puzzle[x][y]);
+            }
+        }
+
+        return builder.toString();
+    }
+
     public void revertLastMove() {
         Move move = _moves.pop();
 
         _puzzle[move.start.x][move.start.y] = STICK;
         _puzzle[move.jumpedOver.x][move.jumpedOver.y] = STICK;
         _puzzle[move.end.x][move.end.y] = EMPTY;
-        _moves.pop();
         _nbSticks++;
     }
 
@@ -84,39 +99,29 @@ public class PuzzleSolver {
 
         for (int x = 0; x != _puzzle.length; x++) {
             for (int y = 0; y != _puzzle.length; y++) {
-                int positionType = _puzzle[x][y];
-
-                if (positionType == NOT_ON_PUZZLE || positionType == EMPTY)
+                if (_puzzle[x][y] == NOT_ON_PUZZLE || _puzzle[x][y] == EMPTY)
                     continue;
 
-                possibleMoves.addAll(getPossibleMovesForPosition(x, y));
+                // LEFT
+                if (y >= 2 && _puzzle[x][y - 1] == STICK && _puzzle[x][y - 2] == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 1), new Position(x, y - 2)));
+                }
+
+                // RIGHT
+                if (_puzzle.length > y + 2 && _puzzle[x][y + 1] == STICK && _puzzle[x][y + 2] == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 1), new Position(x, y + 2)));
+                }
+
+                // UP
+                if (x >= 2 && _puzzle[x - 1][y] == STICK && _puzzle[x - 2][y] == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x - 1, y), new Position(x - 2, y)));
+                }
+
+                // DOWN
+                if (_puzzle.length > x + 2 && _puzzle[x + 1][y] == STICK && _puzzle[x + 2][y] == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x + 1, y), new Position(x + 2, y)));
+                }
             }
-        }
-
-        return possibleMoves;
-    }
-
-    public ArrayList<Move> getPossibleMovesForPosition(int x, int y) {
-        ArrayList<Move> possibleMoves =  new ArrayList<>();
-
-        // LEFT
-        if (y >= 2 && _puzzle[x][y - 1] == STICK && _puzzle[x][y - 2] == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 1), new Position(x, y - 2)));
-        }
-
-        // RIGHT
-        if (_puzzle.length > y + 2 && _puzzle[x][y + 1] == STICK && _puzzle[x][y + 2] == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 1), new Position(x, y + 2)));
-        }
-
-        // UP
-        if (x >= 2 && _puzzle[x - 1][y] == STICK && _puzzle[x - 2][y] == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x - 1, y), new Position(x - 2, y)));
-        }
-
-        // DOWN
-        if (_puzzle.length > x + 2 && _puzzle[x + 1][y] == STICK && _puzzle[x + 2][y] == EMPTY) {
-            possibleMoves.add(new Move(new Position(x, y), new Position(x + 1, y), new Position(x + 2, y)));
         }
 
         return possibleMoves;
