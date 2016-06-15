@@ -32,10 +32,12 @@ public class PuzzleSolver {
         }
 
         // On va chercher tous les coups possible sur le puzzle.
-        PriorityQueue<Move> possibleMoves = getPossibleMoves();
+        List<Move> possibleMoves = getPossibleMoves();
 
         while (!possibleMoves.isEmpty()) {
-            Move move = possibleMoves.poll();
+
+            Move move = getBestMove(possibleMoves);
+            possibleMoves.remove(move);
 
             // Pour chaque coup possible, on tente de le jouer.
             makeMove(move);
@@ -47,6 +49,7 @@ public class PuzzleSolver {
             } else {
                 _badBoardStates.add(getPuzzleString(_puzzle));
                 revertLastMove();
+
             }
         }
 
@@ -54,17 +57,47 @@ public class PuzzleSolver {
         return false;
     }
 
-    public Move calculateBestMove(List<Move> possibleMoves) {
-        Move bestMove = null;
+    public Move getBestMove(List<Move> possibleMoves) {
+        Move bestMove = possibleMoves.get(0);
+        int bestDeepWeight = Integer.MAX_VALUE;
 
-        for (Move move : possibleMoves)
-        if (bestMove == null)
-            bestMove = move;
-        else
-            if (move.weight < bestMove.weight)
+        if (_nbSticks < 4)
+            return bestMove;
+
+        for (Move move : possibleMoves) {
+            int deepWeight = getDeepWeight(move, 3);
+
+            if (deepWeight < bestDeepWeight) {
+                bestDeepWeight = deepWeight;
                 bestMove = move;
+            }
+        }
 
         return bestMove;
+    }
+
+    public int getDeepWeight(Move aMove, int level) {
+        // Condition de sortie
+        if (level == 0)
+            return aMove.weight;
+
+        makeMove(aMove);
+
+        List<Move> possibleMoves = getPossibleMoves();
+
+        int bestDeepWeight = Integer.MAX_VALUE;
+
+        for (Move move : possibleMoves) {
+            int deepWeight = getDeepWeight(move, level - 1);
+
+            if (deepWeight < bestDeepWeight) {
+                bestDeepWeight = deepWeight;
+            }
+        }
+
+        revertLastMove();
+
+        return aMove.weight + bestDeepWeight;
     }
 
     public List<Position> getPossiblePositions(int[][] puzzle) {
@@ -121,8 +154,8 @@ public class PuzzleSolver {
         _nbPositionsVisited++;
     }
 
-    public PriorityQueue<Move> getPossibleMoves() {
-        PriorityQueue<Move> possibleMoves = new PriorityQueue<>();
+    public List<Move> getPossibleMoves() {
+        List<Move> possibleMoves = new LinkedList<>();
 
         for (Position position : _possiblePositions) {
             int x = position.x;
