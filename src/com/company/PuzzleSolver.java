@@ -8,16 +8,15 @@ public class PuzzleSolver {
     private static final int EMPTY = 2;
 
     private static final int[][] WEIGHTS = {
-            {3,3,3,3,3,3,3},
-            {3,2,2,2,2,2,3},
-            {3,2,1,1,1,2,3},
+            {6,5,4,3,4,5,6},
+            {5,4,3,2,3,4,5},
+            {4,3,2,1,2,3,4},
             {3,2,1,0,1,2,3},
-            {3,2,1,1,1,2,3},
-            {3,2,2,2,2,2,3},
-            {3,3,3,3,3,3,3}};
+            {4,3,2,1,2,3,4},
+            {5,4,3,2,3,4,5},
+            {6,5,4,3,4,5,6}};
 
     private int[][] _puzzle;
-    private List<Position> _possiblePositions;
     private Stack<Move> _moves;
     private int _nbSticks;
     private int _nbPositionsVisited;
@@ -28,7 +27,6 @@ public class PuzzleSolver {
         _moves = new Stack<>();
         _nbSticks = calculateNbSticks(puzzle);
         _badBoardStates = new HashSet<>();
-        _possiblePositions = getPossiblePositions(puzzle);
     }
 
     public boolean solvePuzzle() {
@@ -100,23 +98,13 @@ public class PuzzleSolver {
 
     public int calculateBoardWeight() {
         int boardWeight = 0;
+        for (int x = 0; x != _puzzle.length; x++)
+            for (int y = 0; y != _puzzle.length; y++)
+                if (_puzzle[x][y] != NOT_ON_PUZZLE)
+                    boardWeight += WEIGHTS[x][y];
 
-        for (Position position : _possiblePositions) {
-            boardWeight += WEIGHTS[position.x][position.y];
-        }
 
         return boardWeight;
-    }
-
-    public List<Position> getPossiblePositions(int[][] puzzle) {
-        List<Position> positions = new LinkedList<>();
-
-        for (int x = 0; x != puzzle.length; x++)
-            for (int y = 0; y != puzzle.length; y++)
-                if (puzzle[x][y] != NOT_ON_PUZZLE)
-                    positions.add(new Position(x, y));
-
-        return positions;
     }
 
     public int getNbPositionsVisited() {
@@ -165,31 +153,31 @@ public class PuzzleSolver {
     public List<Move> getPossibleMoves() {
         List<Move> possibleMoves = new LinkedList<>();
 
-        for (Position position : _possiblePositions) {
-            int x = position.x;
-            int y = position.y;
+        for (int x = 0; x != _puzzle.length; x++) {
+            for (int y = 0; y != _puzzle.length; y++) {
 
-            if (_puzzle[x][y] == EMPTY)
-                continue;
+                if (_puzzle[x][y] == EMPTY || _puzzle[x][y] == NOT_ON_PUZZLE)
+                    continue;
 
-            // LEFT
-            if (y >= 2 && _puzzle[x][y - 1] == STICK && _puzzle[x][y - 2] == EMPTY) {
-                possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 1), new Position(x, y - 2)));
-            }
+                // LEFT
+                if (y >= 2 && _puzzle[x][y - 1] == STICK && _puzzle[x][y - 2] == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 1), new Position(x, y - 2)));
+                }
 
-            // RIGHT
-            if (_puzzle.length > y + 2 && _puzzle[x][y + 1] == STICK && _puzzle[x][y + 2] == EMPTY) {
-                possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 1), new Position(x, y + 2)));
-            }
+                // RIGHT
+                if (_puzzle.length > y + 2 && _puzzle[x][y + 1] == STICK && _puzzle[x][y + 2] == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 1), new Position(x, y + 2)));
+                }
 
-            // UP
-            if (x >= 2 && _puzzle[x - 1][y] == STICK && _puzzle[x - 2][y] == EMPTY) {
-                possibleMoves.add(new Move(new Position(x, y), new Position(x - 1, y), new Position(x - 2, y)));
-            }
+                // UP
+                if (x >= 2 && _puzzle[x - 1][y] == STICK && _puzzle[x - 2][y] == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x - 1, y), new Position(x - 2, y)));
+                }
 
-            // DOWN
-            if (_puzzle.length > x + 2 && _puzzle[x + 1][y] == STICK && _puzzle[x + 2][y] == EMPTY) {
-                possibleMoves.add(new Move(new Position(x, y), new Position(x + 1, y), new Position(x + 2, y)));
+                // DOWN
+                if (_puzzle.length > x + 2 && _puzzle[x + 1][y] == STICK && _puzzle[x + 2][y] == EMPTY) {
+                    possibleMoves.add(new Move(new Position(x, y), new Position(x + 1, y), new Position(x + 2, y)));
+                }
             }
         }
 
@@ -207,5 +195,25 @@ public class PuzzleSolver {
         }
 
         return nbSticks;
+    }
+
+    public void printGridToConsole(){
+
+        int[][]puzzle = _puzzle;
+        int count = 0;
+
+        for (int i=0;i<puzzle.length;i++){
+
+            for (int j=0;j<puzzle.length;j++){
+                count++;
+
+                if(count==7){
+                    System.out.println(puzzle[i][j]);
+                }else{
+                    System.out.print(puzzle[i][j]);
+                }
+            }
+            count=0;
+        }
     }
 }

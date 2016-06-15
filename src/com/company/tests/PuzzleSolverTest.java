@@ -16,7 +16,7 @@ public class PuzzleSolverTest {
 
     @Test
     public void solvePuzzle_PuzzleWithSolution_PuzzleSolved() {
-        PuzzleSolver solver = new PuzzleSolver(defaultPuzzle2);
+        PuzzleSolver solver = new PuzzleSolver(defaultPuzzle);
         assertTrue(solver.solvePuzzle());
         assertEquals(1, solver.getNbSticks());
         printResults(solver);
