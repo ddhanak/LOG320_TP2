@@ -16,7 +16,7 @@ public class PuzzleSolverTest {
 
     @Test
     public void solvePuzzle_PuzzleWithSolution_PuzzleSolved() {
-        PuzzleSolver solver = new PuzzleSolver(defaultPuzzle);
+        PuzzleSolver solver = new PuzzleSolver(defaultPuzzle2);
         assertTrue(solver.solvePuzzle());
         assertEquals(1, solver.getNbSticks());
         printResults(solver);
@@ -78,13 +78,13 @@ public class PuzzleSolverTest {
             {0,0,1,1,1,0,0}};
 
     int[][] defaultPuzzle2 = new int[][]{
+            {0,0,2,2,2,0,0},
             {0,0,1,1,1,0,0},
+            {2,1,1,1,1,1,2},
+            {2,1,1,2,1,1,2},
+            {2,1,1,1,1,1,2},
             {0,0,1,1,1,0,0},
-            {1,1,1,1,1,1,1},
-            {1,1,1,2,1,1,1},
-            {1,2,2,2,1,1,1},
-            {0,0,1,1,1,0,0},
-            {0,0,1,1,1,0,0}};
+            {0,0,2,2,2,0,0}};
 
 
     int [][] bigPuzzle = new int [][] {
