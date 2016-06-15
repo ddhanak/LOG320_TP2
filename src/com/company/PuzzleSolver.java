@@ -65,7 +65,6 @@ public class PuzzleSolver {
         _puzzle[move.start.x][move.start.y] = STICK;
         _puzzle[move.jumpedOver.x][move.jumpedOver.y] = STICK;
         _puzzle[move.end.x][move.end.y] = EMPTY;
-        _moves.pop();
         _nbSticks++;
     }
 
