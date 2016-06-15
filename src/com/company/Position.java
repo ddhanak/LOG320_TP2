@@ -10,8 +10,17 @@ public class Position {
         this.y = y;
     }
 
+    public Position(int x, int y, int v) {
+        this.x = x;
+        this.y = y;
+        this.v = v;
+    }
+
+
+
     public int x;
     public int y;
+    public int v;
 
     @Override
     public String toString() {

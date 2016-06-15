@@ -1,6 +1,7 @@
 package com.company.tests;
 
 import com.company.FileHelper;
+import com.company.GridPuzzle;
 import com.company.Move;
 import com.company.PuzzleSolver;
 import org.junit.Test;
@@ -16,7 +17,7 @@ public class PuzzleSolverTest {
 
     @Test
     public void solvePuzzle_PuzzleWithSolution_PuzzleSolved() {
-        PuzzleSolver solver = new PuzzleSolver(defaultPuzzle2);
+        PuzzleSolver solver = new PuzzleSolver(gPuzzleDefault2);
         assertTrue(solver.solvePuzzle());
         assertEquals(1, solver.getNbSticks());
         printResults(solver);
@@ -24,7 +25,7 @@ public class PuzzleSolverTest {
 
     @Test
     public void solvePuzzle_PuzzleWithNoSolution_ReturnsFalse() {
-        PuzzleSolver solver = new PuzzleSolver(unsolvablePuzzle);
+        PuzzleSolver solver = new PuzzleSolver(gPuzzleUnsolvable);
         assertFalse(solver.solvePuzzle());
     }
 
@@ -87,4 +88,9 @@ public class PuzzleSolverTest {
             {1,1,1,1,1,1,1},
             {0,0,1,1,1,0,0},
             {0,0,1,1,1,0,0}};
+
+    GridPuzzle gPuzzleDefault = new GridPuzzle(defaultPuzzle);
+    GridPuzzle gPuzzleDefault2 = new GridPuzzle(defaultPuzzle2);
+    GridPuzzle gPuzzleUnsolvable = new GridPuzzle(unsolvablePuzzle);
+
 }

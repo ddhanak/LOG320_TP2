@@ -16,13 +16,14 @@ public class PuzzleSolver {
             {3,2,2,2,2,2,3},
             {3,3,3,3,3,3,3}};
 
-    private int[][] _puzzle;
+   // private int[][] _puzzle;
+    private GridPuzzle gPuzzle;
     private List<Position> _possiblePositions;
     private Stack<Move> _moves;
     private int _nbSticks;
     private int _nbPositionsVisited;
     private HashSet<String> _badBoardStates;
-
+/*
     public PuzzleSolver(int[][] puzzle) {
         _puzzle = puzzle;
         _moves = new Stack<>();
@@ -30,13 +31,21 @@ public class PuzzleSolver {
         _badBoardStates = new HashSet<>();
         _possiblePositions = getPossiblePositions(puzzle);
     }
+*/
+    public PuzzleSolver(GridPuzzle gPuzzle) {
+        this.gPuzzle = gPuzzle;
+        _moves = new Stack<>();
+        _nbSticks = calculateNbSticks();
+        _badBoardStates = new HashSet<>();
+        _possiblePositions = getPossiblePositions();
+    }
 
     public boolean solvePuzzle() {
         // Si il reste une tige, le puzzle est résolu.
         if (_nbSticks == 1)
             return true;
 
-        if (_badBoardStates.contains(getPuzzleString(_puzzle))) {
+        if (_badBoardStates.contains(getPuzzleString())) {
             return false;
         }
 
@@ -56,7 +65,7 @@ public class PuzzleSolver {
             if (solvePuzzle()) {
                 return true;
             } else {
-                _badBoardStates.add(getPuzzleString(_puzzle));
+                _badBoardStates.add(getPuzzleString());
                 revertLastMove();
             }
         }
@@ -108,12 +117,12 @@ public class PuzzleSolver {
         return boardWeight;
     }
 
-    public List<Position> getPossiblePositions(int[][] puzzle) {
+    public List<Position> getPossiblePositions() {
         List<Position> positions = new LinkedList<>();
 
-        for (int x = 0; x != puzzle.length; x++)
-            for (int y = 0; y != puzzle.length; y++)
-                if (puzzle[x][y] != NOT_ON_PUZZLE)
+        for (int x = 0; x != gPuzzle.getLength(); x++)
+            for (int y = 0; y != gPuzzle.getLength(); y++)
+                if (gPuzzle.getCase(x,y) != NOT_ON_PUZZLE)
                     positions.add(new Position(x, y));
 
         return positions;
@@ -131,12 +140,12 @@ public class PuzzleSolver {
         return _nbSticks;
     }
 
-    public String getPuzzleString(int[][] puzzle) {
+    public String getPuzzleString() {
         StringBuilder builder = new StringBuilder(49);
 
-        for (int x = 0; x != _puzzle.length; x++) {
-            for (int y = 0; y != _puzzle.length; y++) {
-                builder.append(puzzle[x][y]);
+        for (int x = 0; x != gPuzzle.getLength(); x++) {
+            for (int y = 0; y != gPuzzle.getLength(); y++) {
+                builder.append(gPuzzle.getCase(x,y));
             }
         }
 
@@ -146,16 +155,16 @@ public class PuzzleSolver {
     public void revertLastMove() {
         Move move = _moves.pop();
 
-        _puzzle[move.start.x][move.start.y] = STICK;
-        _puzzle[move.jumpedOver.x][move.jumpedOver.y] = STICK;
-        _puzzle[move.end.x][move.end.y] = EMPTY;
+        gPuzzle.setCase(move.start.x,move.start.y,STICK);
+        gPuzzle.setCase(move.jumpedOver.x,move.jumpedOver.y,STICK);
+        gPuzzle.setCase(move.end.x,move.end.y,EMPTY);
         _nbSticks++;
     }
 
     public void makeMove(Move move) {
-        _puzzle[move.start.x][move.start.y] = EMPTY;
-        _puzzle[move.jumpedOver.x][move.jumpedOver.y] = EMPTY;
-        _puzzle[move.end.x][move.end.y] = STICK;
+        gPuzzle.setCase(move.start.x,move.start.y,EMPTY);
+        gPuzzle.setCase(move.jumpedOver.x,move.jumpedOver.y,EMPTY);
+        gPuzzle.setCase(move.end.x,move.end.y,STICK);
 
         _moves.add(move);
         _nbSticks--;
@@ -169,26 +178,26 @@ public class PuzzleSolver {
             int x = position.x;
             int y = position.y;
 
-            if (_puzzle[x][y] == EMPTY)
+            if (gPuzzle.getCase(x,y) == EMPTY)
                 continue;
 
             // LEFT
-            if (y >= 2 && _puzzle[x][y - 1] == STICK && _puzzle[x][y - 2] == EMPTY) {
+            if (y >= 2 && gPuzzle.getCase(x,y-1) == STICK && gPuzzle.getCase(x,y-2) == EMPTY) {
                 possibleMoves.add(new Move(new Position(x, y), new Position(x, y - 1), new Position(x, y - 2)));
             }
 
             // RIGHT
-            if (_puzzle.length > y + 2 && _puzzle[x][y + 1] == STICK && _puzzle[x][y + 2] == EMPTY) {
+            if (gPuzzle.getLength() > y + 2 && gPuzzle.getCase(x,y+1) == STICK && gPuzzle.getCase(x,y+2) == EMPTY) {
                 possibleMoves.add(new Move(new Position(x, y), new Position(x, y + 1), new Position(x, y + 2)));
             }
 
             // UP
-            if (x >= 2 && _puzzle[x - 1][y] == STICK && _puzzle[x - 2][y] == EMPTY) {
+            if (x >= 2 && gPuzzle.getCase(x-1,y) == STICK && gPuzzle.getCase(x-2,y) == EMPTY) {
                 possibleMoves.add(new Move(new Position(x, y), new Position(x - 1, y), new Position(x - 2, y)));
             }
 
             // DOWN
-            if (_puzzle.length > x + 2 && _puzzle[x + 1][y] == STICK && _puzzle[x + 2][y] == EMPTY) {
+            if (gPuzzle.getLength() > x + 2 && gPuzzle.getCase(x+1,y) == STICK && gPuzzle.getCase(x+2,y) == EMPTY) {
                 possibleMoves.add(new Move(new Position(x, y), new Position(x + 1, y), new Position(x + 2, y)));
             }
         }
@@ -196,12 +205,12 @@ public class PuzzleSolver {
         return possibleMoves;
     }
 
-    public int calculateNbSticks(int[][] puzzle) {
+    public int calculateNbSticks() {
         int nbSticks = 0;
 
-        for (int x = 0; x != _puzzle.length; x++) {
-            for (int y = 0; y != _puzzle.length; y++) {
-                if (puzzle[x][y] == STICK)
+        for (int x = 0; x != gPuzzle.getLength(); x++) {
+            for (int y = 0; y != gPuzzle.getLength(); y++) {
+                if (gPuzzle.getCase(x,y) == STICK)
                     nbSticks++;
             }
         }
