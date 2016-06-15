@@ -1,8 +1,8 @@
 //package UI;
 //
-//import com.company.Board;
-//import com.company.Position;
-//import com.company.PuzzleSolver;
+//import com.log320.PuzzleBoard;
+//import com.log320.Position;
+//import com.log320.PuzzleSolver;
 //
 //import javax.swing.*;
 //import java.awt.*;
@@ -14,13 +14,13 @@
 // */
 //public class GridPanel extends JPanel implements Observer{
 //
-//    private Board gPuzzle;
+//    private PuzzleBoard gPuzzle;
 //    private PuzzleSolver pSolver;
 //    private BoxSquareGrid[][] myButtons;
 //    private static  int cnt = 0;
 //    public static List<Position> myPositions;
 //
-//    public GridPanel(Board gPuzzle, PuzzleSolver pSolver){
+//    public GridPanel(PuzzleBoard gPuzzle, PuzzleSolver pSolver){
 //        super();
 //        this.gPuzzle = gPuzzle;
 //        this.pSolver = pSolver;
@@ -53,7 +53,7 @@
 //    public void initGrid(int[][] puzzle) {
 //
 //        gPuzzle.deleteObservers();
-//        gPuzzle = new Board(puzzle);
+//        gPuzzle = new PuzzleBoard(puzzle);
 //        updateObserver();
 //        updateGrid();
 //    }

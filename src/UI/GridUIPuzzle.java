@@ -1,7 +1,7 @@
 //package UI;
-//import com.company.FileHelper;
-//import com.company.Board;
-//import com.company.PuzzleSolver;
+//import com.log320.utilities.FileHelper;
+//import com.log320.PuzzleBoard;
+//import com.log320.PuzzleSolver;
 //
 //import javax.swing.*;
 //import java.awt.*;
@@ -18,7 +18,7 @@
 //    private GridPanel gPanel;
 //    private MenuPuzzle menuPuzzle;
 //    private  OptionPanel oPanel;
-//    private Board gPuzzle;
+//    private PuzzleBoard gPuzzle;
 //    private PuzzleSolver pSolver;
 //    private static final String gridFile = "test2.puzzle";
 //
@@ -29,7 +29,7 @@
 //    public void init() throws IOException {
 //        setSize(FRAME_WIDTH,FRAME_HEIGHT);
 //        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        gPuzzle = new Board(FileHelper.getPuzzleFromFile(gridFile));
+//        gPuzzle = new PuzzleBoard(FileHelper.getPuzzleFromFile(gridFile));
 //        pSolver = new PuzzleSolver(gPuzzle);
 //        pPanel = new PrincipalPanel();
 //        gPanel = new GridPanel(gPuzzle,pSolver);

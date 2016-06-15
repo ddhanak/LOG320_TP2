@@ -1,10 +1,7 @@
-package com.company;
+package com.log320.utilities;
 
 import java.io.*;
 
-/**
- * Created by Deep on 2016-06-01.
- */
 public class FileHelper {
 
     public static int[][] getPuzzleFromFile(String filepath) throws IOException {
